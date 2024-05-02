@@ -7,6 +7,7 @@ import { LocationModule } from './location/location.module';
 import { UserModule } from './user/user.module';
 import { AuthMiddleware } from './user/middlewares/auth.middleware';
 import { ConfigModule } from '@nestjs/config';
+import { AttendanceModule } from './attendance/attendance.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ConfigModule } from '@nestjs/config';
     TypeOrmModule.forRoot(dataSourceOptions),
     UserModule,
     ConfigModule.forRoot(),
+    AttendanceModule,
   ],
   controllers: [AppController],
   providers: [AppService],

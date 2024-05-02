@@ -1,34 +1,60 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
+import { User } from 'src/user/decorator/user.decorator';
+import { AuthGuard } from 'src/user/guards/auth.guard';
+import { UserEntity } from 'src/user/user.entity';
+import { CreateLocationDto } from './dto/createLocation.dto';
+import { UpdateLocationDto } from './dto/updateLocation.dto';
+import { LocationEntity } from './location.entity';
 import { LocationService } from './location.service';
-import { CreateLocationDto } from './dto/create-location.dto';
-import { UpdateLocationDto } from './dto/update-location.dto';
 
-@Controller('location')
+@Controller('locations')
 export class LocationController {
   constructor(private readonly locationService: LocationService) {}
 
   @Post()
-  create(@Body() createLocationDto: CreateLocationDto) {
-    return this.locationService.create(createLocationDto);
+  @UseGuards(AuthGuard)
+  @UsePipes(new ValidationPipe())
+  async create(
+    @Body('location') createLocationDto: CreateLocationDto,
+    @User() user: UserEntity,
+  ): Promise<LocationEntity> {
+    return this.locationService.createLocation(createLocationDto);
   }
 
   @Get()
   findAll() {
-    return this.locationService.findAll();
+    return this.locationService.findAllLocations();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.locationService.findOne(+id);
+    return this.locationService.findLocationById(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLocationDto: UpdateLocationDto) {
-    return this.locationService.update(+id, updateLocationDto);
+  @UseGuards(AuthGuard)
+  update(
+    @Param('id') id: string,
+    @Body('location') updateLocationDto: UpdateLocationDto,
+    @User() user: UserEntity,
+  ) {
+    return this.locationService.updateLocation(+id, updateLocationDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.locationService.remove(+id);
+  @UseGuards(AuthGuard)
+  remove(@Param('id') id: string, @User() user: UserEntity) {
+    return this.locationService.removeLocation(+id);
   }
 }

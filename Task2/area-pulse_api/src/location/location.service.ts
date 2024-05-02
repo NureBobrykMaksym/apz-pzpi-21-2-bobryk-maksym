@@ -1,26 +1,44 @@
 import { Injectable } from '@nestjs/common';
-import { CreateLocationDto } from './dto/create-location.dto';
-import { UpdateLocationDto } from './dto/update-location.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { DeleteResult, Repository } from 'typeorm';
+import { CreateLocationDto } from './dto/createLocation.dto';
+import { UpdateLocationDto } from './dto/updateLocation.dto';
+import { LocationEntity } from './location.entity';
 
 @Injectable()
 export class LocationService {
-  create(createLocationDto: CreateLocationDto) {
-    return 'This action adds a new location';
+  constructor(
+    @InjectRepository(LocationEntity)
+    private readonly locationRepository: Repository<LocationEntity>,
+  ) {}
+  async createLocation(
+    createLocationDto: CreateLocationDto,
+  ): Promise<LocationEntity> {
+    const newLocation = new LocationEntity();
+    Object.assign(newLocation, createLocationDto);
+
+    return await this.locationRepository.save(newLocation);
   }
 
-  findAll() {
-    return `This action returns all location`;
+  async findAllLocations(): Promise<LocationEntity[]> {
+    return await this.locationRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} location`;
+  async findLocationById(id: number): Promise<LocationEntity> {
+    return await this.locationRepository.findOneBy({ id });
   }
 
-  update(id: number, updateLocationDto: UpdateLocationDto) {
-    return `This action updates a #${id} location`;
+  async updateLocation(
+    id: number,
+    updateLocationDto: UpdateLocationDto,
+  ): Promise<LocationEntity> {
+    const location = await this.findLocationById(id);
+    Object.assign(location, updateLocationDto);
+
+    return await this.locationRepository.save(location);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} location`;
+  async removeLocation(id: number): Promise<DeleteResult> {
+    return await this.locationRepository.delete({ id });
   }
 }
