@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
+import { LocationService } from './../location/location.service';
 import { AttendanceEntity } from './attendance.entity';
 import { CreateAttendanceDto } from './dto/create-attendance.dto';
 import { UpdateAttendanceDto } from './dto/update-attendance.dto';
@@ -10,12 +11,23 @@ export class AttendanceService {
   constructor(
     @InjectRepository(AttendanceEntity)
     private readonly attendanceRepository: Repository<AttendanceEntity>,
+    private readonly locationService: LocationService,
   ) {}
   async createAttendance(
     createAttendanceDto: CreateAttendanceDto,
   ): Promise<AttendanceEntity> {
     const newAttendance = new AttendanceEntity();
-    Object.assign(newAttendance, createAttendanceDto);
+    newAttendance.name = createAttendanceDto.name;
+
+    const location = await this.locationService.findLocationById(
+      createAttendanceDto.locationId,
+    );
+    if (!location) {
+      // Handle error when location is not found
+      throw new Error('Location not found');
+    }
+
+    newAttendance.location = location;
 
     return await this.attendanceRepository.save(newAttendance);
   }

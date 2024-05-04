@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { AttendanceEntity } from '../attendance/attendance.entity';
+import { UserEntity } from '../user/user.entity';
 
 @Entity({ name: 'locations' })
 export class LocationEntity {
@@ -13,4 +21,12 @@ export class LocationEntity {
 
   @Column()
   area: number;
+  // TODO: Fix migrations
+  @OneToMany(() => AttendanceEntity, (attendance) => attendance.location, {
+    onDelete: 'CASCADE',
+  })
+  attendances: AttendanceEntity[];
+
+  @ManyToOne(() => UserEntity, (user) => user.locations)
+  user: UserEntity;
 }

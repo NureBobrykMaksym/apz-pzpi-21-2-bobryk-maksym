@@ -16,14 +16,14 @@ import { CreateAttendanceDto } from './dto/create-attendance.dto';
 import { UpdateAttendanceDto } from './dto/update-attendance.dto';
 import { AttendanceEntity } from './attendance.entity';
 
-@Controller('attendance')
+@Controller('attendances')
 export class AttendanceController {
   constructor(private readonly attendanceService: AttendanceService) {}
 
   @Post()
   @UsePipes(new ValidationPipe())
   create(
-    @Body() createAttendanceDto: CreateAttendanceDto,
+    @Body('attendance') createAttendanceDto: CreateAttendanceDto,
   ): Promise<AttendanceEntity> {
     return this.attendanceService.createAttendance(createAttendanceDto);
   }
