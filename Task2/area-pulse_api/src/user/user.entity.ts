@@ -27,7 +27,9 @@ export class UserEntity {
   @Column({ select: false })
   password: string;
 
-  @OneToMany(() => LocationEntity, (location) => location.user)
+  @OneToMany(() => LocationEntity, (location) => location.user, {
+    cascade: true,
+  })
   locations: LocationEntity[];
 
   @BeforeInsert()

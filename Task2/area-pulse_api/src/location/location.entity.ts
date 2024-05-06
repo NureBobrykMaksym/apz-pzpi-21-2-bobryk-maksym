@@ -23,10 +23,12 @@ export class LocationEntity {
   area: number;
   // TODO: Fix migrations
   @OneToMany(() => AttendanceEntity, (attendance) => attendance.location, {
-    onDelete: 'CASCADE',
+    cascade: true,
   })
   attendances: AttendanceEntity[];
 
-  @ManyToOne(() => UserEntity, (user) => user.locations)
+  @ManyToOne(() => UserEntity, (user) => user.locations, {
+    onDelete: 'CASCADE',
+  })
   user: UserEntity;
 }

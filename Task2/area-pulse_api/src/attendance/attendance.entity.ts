@@ -1,5 +1,5 @@
-import { LocationEntity } from '../location/location.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { LocationEntity } from '../location/location.entity';
 
 @Entity({ name: 'attendances' })
 export class AttendanceEntity {
@@ -9,6 +9,8 @@ export class AttendanceEntity {
   @Column()
   name: string;
 
-  @ManyToOne(() => LocationEntity, (location) => location.attendances)
+  @ManyToOne(() => LocationEntity, (location) => location.attendances, {
+    onDelete: 'CASCADE',
+  })
   location: LocationEntity;
 }
