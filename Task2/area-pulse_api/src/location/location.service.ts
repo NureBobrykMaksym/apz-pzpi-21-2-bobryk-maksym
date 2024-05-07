@@ -4,6 +4,7 @@ import { DeleteResult, Repository } from 'typeorm';
 import { CreateLocationDto } from './dto/createLocation.dto';
 import { UpdateLocationDto } from './dto/updateLocation.dto';
 import { LocationEntity } from './location.entity';
+import { UserEntity } from 'src/user/user.entity';
 
 @Injectable()
 export class LocationService {
@@ -13,9 +14,12 @@ export class LocationService {
   ) {}
   async createLocation(
     createLocationDto: CreateLocationDto,
+    currentUser: UserEntity,
   ): Promise<LocationEntity> {
     const newLocation = new LocationEntity();
     Object.assign(newLocation, createLocationDto);
+
+    newLocation.user = currentUser;
 
     return await this.locationRepository.save(newLocation);
   }

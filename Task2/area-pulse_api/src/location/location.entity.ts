@@ -21,7 +21,7 @@ export class LocationEntity {
 
   @Column()
   area: number;
-  // TODO: Fix migrations
+
   @OneToMany(() => AttendanceEntity, (attendance) => attendance.location, {
     cascade: true,
   })

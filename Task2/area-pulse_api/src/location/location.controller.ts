@@ -15,8 +15,8 @@ import { AuthGuard } from 'src/user/guards/auth.guard';
 import { UserEntity } from 'src/user/user.entity';
 import { CreateLocationDto } from './dto/createLocation.dto';
 import { UpdateLocationDto } from './dto/updateLocation.dto';
-import { LocationEntity } from './location.entity';
 import { LocationService } from './location.service';
+import { LocationEntity } from './location.entity';
 
 @Controller('locations')
 export class LocationController {
@@ -27,9 +27,9 @@ export class LocationController {
   @UsePipes(new ValidationPipe())
   async create(
     @Body('location') createLocationDto: CreateLocationDto,
-    @User() user: UserEntity,
+    @User() currentUser: UserEntity,
   ): Promise<LocationEntity> {
-    return this.locationService.createLocation(createLocationDto);
+    return this.locationService.createLocation(createLocationDto, currentUser);
   }
 
   @Get()
