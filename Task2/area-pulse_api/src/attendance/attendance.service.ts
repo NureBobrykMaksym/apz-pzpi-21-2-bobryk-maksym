@@ -5,6 +5,7 @@ import { LocationService } from './../location/location.service';
 import { AttendanceEntity } from './attendance.entity';
 import { CreateAttendanceDto } from './dto/create-attendance.dto';
 import { UpdateAttendanceDto } from './dto/update-attendance.dto';
+import { UserEntity } from '../user/user.entity';
 
 @Injectable()
 export class AttendanceService {
@@ -15,12 +16,14 @@ export class AttendanceService {
   ) {}
   async createAttendance(
     createAttendanceDto: CreateAttendanceDto,
+    currentUser: UserEntity,
   ): Promise<AttendanceEntity> {
     const newAttendance = new AttendanceEntity();
     newAttendance.name = createAttendanceDto.name;
 
     const location = await this.locationService.findLocationById(
       createAttendanceDto.locationId,
+      currentUser,
     );
     if (!location) {
       // Handle error when location is not found

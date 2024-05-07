@@ -10,11 +10,14 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { AuthGuard } from 'src/user/guards/auth.guard';
+import { User } from '../user/decorator/user.decorator';
+import { AuthGuard } from '../user/guards/auth.guard';
+import { UserEntity } from '../user/user.entity';
+import { DeleteResult } from 'typeorm';
+import { AttendanceEntity } from './attendance.entity';
 import { AttendanceService } from './attendance.service';
 import { CreateAttendanceDto } from './dto/create-attendance.dto';
 import { UpdateAttendanceDto } from './dto/update-attendance.dto';
-import { AttendanceEntity } from './attendance.entity';
 
 @Controller('attendances')
 export class AttendanceController {
@@ -24,8 +27,12 @@ export class AttendanceController {
   @UsePipes(new ValidationPipe())
   create(
     @Body('attendance') createAttendanceDto: CreateAttendanceDto,
+    @User() currentUser: UserEntity,
   ): Promise<AttendanceEntity> {
-    return this.attendanceService.createAttendance(createAttendanceDto);
+    return this.attendanceService.createAttendance(
+      createAttendanceDto,
+      currentUser,
+    );
   }
 
   @Get()
@@ -36,7 +43,7 @@ export class AttendanceController {
 
   @Get(':id')
   @UseGuards(AuthGuard)
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string): Promise<AttendanceEntity> {
     return this.attendanceService.findOneAttendance(+id);
   }
 
@@ -46,12 +53,12 @@ export class AttendanceController {
   update(
     @Param('id') id: string,
     @Body() updateAttendanceDto: UpdateAttendanceDto,
-  ) {
+  ): Promise<AttendanceEntity> {
     return this.attendanceService.updateAttendance(+id, updateAttendanceDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string): Promise<DeleteResult> {
     return this.attendanceService.removeAttendance(+id);
   }
 }

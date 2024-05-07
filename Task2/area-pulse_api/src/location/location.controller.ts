@@ -13,10 +13,11 @@ import {
 import { User } from 'src/user/decorator/user.decorator';
 import { AuthGuard } from 'src/user/guards/auth.guard';
 import { UserEntity } from 'src/user/user.entity';
+import { DeleteResult } from 'typeorm';
 import { CreateLocationDto } from './dto/createLocation.dto';
 import { UpdateLocationDto } from './dto/updateLocation.dto';
-import { LocationService } from './location.service';
 import { LocationEntity } from './location.entity';
+import { LocationService } from './location.service';
 
 @Controller('locations')
 export class LocationController {
@@ -33,13 +34,16 @@ export class LocationController {
   }
 
   @Get()
-  findAll() {
-    return this.locationService.findAllLocations();
+  findAll(@User() user: UserEntity): Promise<LocationEntity[]> {
+    return this.locationService.findAllLocations(user);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.locationService.findLocationById(+id);
+  findOne(
+    @Param('id') id: string,
+    @User() user: UserEntity,
+  ): Promise<LocationEntity> {
+    return this.locationService.findLocationById(+id, user);
   }
 
   @Patch(':id')
@@ -48,13 +52,13 @@ export class LocationController {
     @Param('id') id: string,
     @Body('location') updateLocationDto: UpdateLocationDto,
     @User() user: UserEntity,
-  ) {
-    return this.locationService.updateLocation(+id, updateLocationDto);
+  ): Promise<LocationEntity> {
+    return this.locationService.updateLocation(+id, user, updateLocationDto);
   }
 
   @Delete(':id')
   @UseGuards(AuthGuard)
-  remove(@Param('id') id: string, @User() user: UserEntity) {
+  remove(@Param('id') id: string): Promise<DeleteResult> {
     return this.locationService.removeLocation(+id);
   }
 }
