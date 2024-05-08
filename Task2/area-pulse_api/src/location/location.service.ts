@@ -55,6 +55,25 @@ export class LocationService {
     }
   }
 
+  async findLocationByIdWithAttendances(
+    id: number,
+    user: UserEntity,
+  ): Promise<LocationEntity> {
+    try {
+      const location = await this.locationRepository.findOne({
+        where: { id, user },
+        relations: ['attendances'],
+      });
+      if (!location) {
+        throw new HttpException('Location not found', HttpStatus.NOT_FOUND);
+      }
+
+      return location;
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
   async updateLocation(
     id: number,
     user: UserEntity,
