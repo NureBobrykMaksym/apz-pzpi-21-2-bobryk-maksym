@@ -121,7 +121,7 @@ export class SectorService {
         throw new Error('Sector not found');
       }
 
-      return await this.sectorRepository.delete(sector);
+      return await this.sectorRepository.delete({ id });
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }

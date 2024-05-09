@@ -18,6 +18,7 @@ export class SectorEntity {
 
   @OneToMany(() => AttendanceEntity, (attendance) => attendance.sector, {
     cascade: true,
+    eager: true,
   })
   attendances: AttendanceEntity[];
 
