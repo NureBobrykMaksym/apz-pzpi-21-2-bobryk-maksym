@@ -69,11 +69,13 @@ export class LocationService {
         where: {
           id,
           user,
-          attendances: {
-            createdDate: Between(startOfWeek, endOfWeek),
+          sectors: {
+            attendances: {
+              createdDate: Between(startOfWeek, endOfWeek),
+            },
           },
         },
-        relations: ['attendances'],
+        relations: ['sectors', 'sectors.attendances'],
       });
       if (!location) {
         throw new HttpException('Location not found', HttpStatus.NOT_FOUND);

@@ -1,3 +1,4 @@
+import { SectorEntity } from '../sector/sector.entity';
 import {
   Column,
   CreateDateColumn,
@@ -6,7 +7,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { LocationEntity } from '../location/location.entity';
 
 @Entity({ name: 'attendances' })
 export class AttendanceEntity {
@@ -16,11 +16,11 @@ export class AttendanceEntity {
   @Column()
   name: string;
 
-  @ManyToOne(() => LocationEntity, (location) => location.attendances, {
+  @ManyToOne(() => SectorEntity, (sector) => sector.attendances, {
     onDelete: 'CASCADE',
     eager: false,
   })
-  location: LocationEntity;
+  sector: SectorEntity;
 
   @CreateDateColumn()
   createdDate: Date;

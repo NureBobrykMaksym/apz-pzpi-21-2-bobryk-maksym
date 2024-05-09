@@ -1,11 +1,11 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-export class CreateAttendanceDto {
+export class CreateSectorDto {
   @IsNotEmpty()
   @IsString()
   readonly name: string;
 
   @IsNotEmpty()
   @IsNumber()
-  readonly sectorId: number;
+  readonly locationId: number;
 }

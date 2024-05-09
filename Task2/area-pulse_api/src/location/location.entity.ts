@@ -1,3 +1,4 @@
+import { SectorEntity } from '../sector/sector.entity';
 import {
   Column,
   Entity,
@@ -5,7 +6,6 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { AttendanceEntity } from '../attendance/attendance.entity';
 import { UserEntity } from '../user/user.entity';
 
 @Entity({ name: 'locations' })
@@ -22,10 +22,10 @@ export class LocationEntity {
   @Column()
   area: number;
 
-  @OneToMany(() => AttendanceEntity, (attendance) => attendance.location, {
+  @OneToMany(() => SectorEntity, (sector) => sector.location, {
     cascade: true,
   })
-  attendances: AttendanceEntity[];
+  sectors: SectorEntity[];
 
   @ManyToOne(() => UserEntity, (user) => user.locations, {
     onDelete: 'CASCADE',

@@ -9,6 +9,7 @@ import { AuthMiddleware } from './user/middlewares/auth.middleware';
 import { ConfigModule } from '@nestjs/config';
 import { AttendanceModule } from './attendance/attendance.module';
 import { AnalyticsModule } from './analytics/analytics.module';
+import { SectorModule } from './sector/sector.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { AnalyticsModule } from './analytics/analytics.module';
     ConfigModule.forRoot(),
     AttendanceModule,
     AnalyticsModule,
+    SectorModule,
   ],
   controllers: [AppController],
   providers: [AppService],
