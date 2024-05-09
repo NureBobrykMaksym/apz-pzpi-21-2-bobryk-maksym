@@ -24,16 +24,48 @@ export class AnalyticsService {
         user,
       );
 
-    console.log(locationWithAttendances);
+    delete locationWithAttendances.id;
 
     const message = await anthropic.messages.create({
-      max_tokens: 1024,
+      max_tokens: 4096,
       messages: [
         {
           role: 'user',
-          content:
-            inputAnalytics.additionalInput ||
-            'Hello, Claude! Can you name the France capital, please? Give answer in markdown format.',
+          content: `
+            Hello, Claude! You are tasked with generating analytics in markdown format based on input data in JSON format. The JSON data will include information about location and it's respective attendance records. Your should parse this data and generate insightful analytics in markdown format.
+            Instructions:
+            - Skip any explanation of yours just GIVE THE ANSWER
+            - Parse the in  put JSON to extract data about each location and its attendances.
+            - For location, calculate the average, maximum, minimum, and total attendance.
+            - Generate markdown output presenting these analytics for location and overall statistics.
+            - Give some tips for improving attendance if possible.
+            - Ensure that the markdown output is well-formatted and easy to read
+
+            Example of input JSON Format:
+            {
+              "id": 3,
+              "name": "location",
+              "description": "aksghjgdsf",
+              "area": 500,
+              "attendances": [
+                  {
+                      "id": 12,
+                      "name": "new one",
+                      "createdDate": "2024-05-08T18:30:17.863Z",
+                      "updatedDate": "2024-05-08T18:30:17.863Z"
+                  },
+                  {
+                      "id": 13,
+                      "name": "new one",
+                      "createdDate": "2024-05-08T18:30:19.430Z",
+                      "updatedDate": "2024-05-08T18:30:19.430Z"
+                  }
+              ]
+          }
+
+          Here is the actual data:
+          ${JSON.stringify(locationWithAttendances)}
+          `,
         },
       ],
       // model: 'claude-3-opus-20240229',

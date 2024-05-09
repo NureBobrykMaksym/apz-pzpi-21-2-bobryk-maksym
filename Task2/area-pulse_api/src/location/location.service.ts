@@ -1,7 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import * as dayjs from 'dayjs';
 import { UserEntity } from 'src/user/user.entity';
-import { DeleteResult, Repository } from 'typeorm';
+import { Between, DeleteResult, Repository } from 'typeorm';
 import { CreateLocationDto } from './dto/createLocation.dto';
 import { UpdateLocationDto } from './dto/updateLocation.dto';
 import { LocationEntity } from './location.entity';
@@ -60,8 +61,18 @@ export class LocationService {
     user: UserEntity,
   ): Promise<LocationEntity> {
     try {
+      const today = dayjs().startOf('day');
+      const startOfWeek = today.startOf('week').toDate();
+      const endOfWeek = today.endOf('week').toDate();
+
       const location = await this.locationRepository.findOne({
-        where: { id, user },
+        where: {
+          id,
+          user,
+          attendances: {
+            createdDate: Between(startOfWeek, endOfWeek),
+          },
+        },
         relations: ['attendances'],
       });
       if (!location) {
