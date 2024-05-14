@@ -61,13 +61,16 @@ export class AnalyticsService {
 
       const dailyAnalytics: DailyAnalytics[] = await this.attendanceRepository
         .createQueryBuilder('attendance')
-        .select('DATE(attendance.createdDate) AS day, COUNT(*) AS count')
+        .select(
+          'sector.name AS sectorName, sector.attendanceCoefficient as desired_amount_attendances, DATE(attendance.createdDate) AS day, COUNT(*) AS count',
+        )
+        .innerJoin('attendance.sector', 'sector')
         .where({ sector: In(sectorIds) })
         .andWhere('attendance.createdDate BETWEEN :start AND :end', {
           start: startOfWeek,
           end: endOfWeek,
         })
-        .groupBy('day')
+        .groupBy('day, sectorName, desired_amount_attendances')
         .getRawMany();
 
       return dailyAnalytics;
@@ -109,14 +112,16 @@ export class AnalyticsService {
 
       const sectorAttendances = await this.attendanceRepository
         .createQueryBuilder('attendance')
-        .select('sector.id AS sectorId, COUNT(*) AS count')
+        .select(
+          'sector.name AS sectorName, sector.attendanceCoefficient AS desired_amount_attendances, COUNT(*) AS count',
+        )
         .innerJoin('attendance.sector', 'sector')
         .where({ sector: In(sectorIds) })
         .andWhere('attendance.createdDate BETWEEN :start AND :end', {
           start: startOfWeek,
           end: endOfWeek,
         })
-        .groupBy('sectorId')
+        .groupBy('sectorName, desired_amount_attendances')
         .getRawMany();
 
       const sectorAttendancesWithPercentage = sectorAttendances.map(
@@ -153,7 +158,7 @@ export class AnalyticsService {
       inputAnalytics.locationId,
       user,
     );
-
+    console.log(minAnalytics, maxAnalytics, percentageForEachSector);
     delete locationWithAttendances.id;
 
     const message = await anthropic.messages.create({
@@ -191,9 +196,13 @@ export class AnalyticsService {
                       "updatedDate": "2024-05-08T18:30:19.430Z"
                   }
               ]
-          }
-
-          Here is the actual data:
+            }
+          Make a table for these stat, include sector name, desired amount of attendances, actual amount of attendances, percentage of attendances and day for max and min attendances:
+          - Here is a sector with min attendance count: ${minAnalytics.sectorName} with ${minAnalytics.count} attendances and desired amount of attendances: ${minAnalytics.desired_amount_attendances} at this day: ${dayjs(minAnalytics.day).format('DD/MM/YYYY')}
+          - Here is a sector with max attendance count: ${maxAnalytics.sectorName} with ${maxAnalytics.count} attendances and desired amount of attendances: ${maxAnalytics.desired_amount_attendances} at this day: ${dayjs(maxAnalytics.day).format('DD/MM/YYYY')}
+          - Here is the percentage of attendances for each sector: ${JSON.stringify(percentageForEachSector)}
+            PS. If there is no data, just leave "-".
+          Here is the actual data wityh attendances:
           ${JSON.stringify(locationWithAttendances)}
           `,
         },

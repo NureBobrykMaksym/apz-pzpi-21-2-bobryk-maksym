@@ -16,6 +16,11 @@ export class SectorEntity {
   @Column()
   name: string;
 
+  @Column({
+    nullable: true,
+  })
+  attendanceCoefficient: number;
+
   @OneToMany(() => AttendanceEntity, (attendance) => attendance.sector, {
     cascade: true,
     eager: true,
