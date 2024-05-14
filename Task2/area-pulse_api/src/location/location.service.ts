@@ -1,6 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as dayjs from 'dayjs';
+import 'dayjs/locale/uk';
+import { AttendanceEntity } from 'src/attendance/attendance.entity';
+import { SectorEntity } from 'src/sector/sector.entity';
 import { UserEntity } from 'src/user/user.entity';
 import { Between, DeleteResult, Repository } from 'typeorm';
 import { CreateLocationDto } from './dto/createLocation.dto';
@@ -12,6 +15,12 @@ export class LocationService {
   constructor(
     @InjectRepository(LocationEntity)
     private readonly locationRepository: Repository<LocationEntity>,
+
+    @InjectRepository(AttendanceEntity)
+    private readonly attendanceRepository: Repository<AttendanceEntity>,
+
+    @InjectRepository(SectorEntity)
+    private readonly sectorRepository: Repository<SectorEntity>,
   ) {}
   async createLocation(
     createLocationDto: CreateLocationDto,
