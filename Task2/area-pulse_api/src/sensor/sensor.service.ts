@@ -17,7 +17,6 @@ export class SensorService {
   async createSensor(createSensorDto: CreateSensorDto): Promise<SensorEntity> {
     try {
       const newSensor = new SensorEntity();
-      Object.assign(newSensor, createSensorDto.name);
 
       const sector = await this.sectorService.findSectorById(
         createSensorDto.sectorId,
@@ -27,7 +26,7 @@ export class SensorService {
         throw new HttpException('Sector is not found', HttpStatus.NOT_FOUND);
       }
 
-      newSensor.sector = sector;
+      Object.assign(newSensor, { name: createSensorDto.name, sector });
 
       return await this.sensorRepository.save(newSensor);
     } catch (error) {
@@ -43,8 +42,10 @@ export class SensorService {
         throw new HttpException('Sector is not found', HttpStatus.NOT_FOUND);
       }
 
-      const sensors = await this.sensorRepository.find({ where: sector });
-
+      const sensors = await this.sensorRepository.find({
+        // where: { sector: { id: sectorId } },
+        where: { sector },
+      });
       if (!sensors) {
         throw new HttpException('There is no sensors', HttpStatus.NOT_FOUND);
       }
@@ -77,6 +78,7 @@ export class SensorService {
   ): Promise<SensorEntity> {
     try {
       let sector;
+      const assignedObject = { name: updateSensorDto.name };
 
       if (updateSensorDto.sectorId) {
         sector = await this.sectorService.findSectorById(
@@ -86,20 +88,20 @@ export class SensorService {
         if (!sector) {
           throw new HttpException('Sector not found', HttpStatus.NOT_FOUND);
         }
+
+        Object.assign(assignedObject, { sector });
       }
 
       const sensor = await this.sensorRepository.findOne({
-        where: { id, sector },
+        where: { id },
       });
 
       if (!sensor) {
         throw new Error('Sensor not found');
       }
+      Object.assign(sensor, assignedObject);
 
-      Object.assign(sector, updateSensorDto.name);
-      sensor.sector = sector;
-
-      return await this.sensorRepository.save(sector);
+      return await this.sensorRepository.save(sensor);
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }

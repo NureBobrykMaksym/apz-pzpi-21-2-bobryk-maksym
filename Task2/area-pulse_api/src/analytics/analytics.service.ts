@@ -158,7 +158,6 @@ export class AnalyticsService {
       inputAnalytics.locationId,
       user,
     );
-    console.log(minAnalytics, maxAnalytics, percentageForEachSector);
     delete locationWithAttendances.id;
 
     const message = await anthropic.messages.create({
@@ -197,9 +196,9 @@ export class AnalyticsService {
                   }
               ]
             }
-          Make a table for these stat, include sector name, desired amount of attendances, actual amount of attendances, percentage of attendances and day for max and min attendances:
-          - Here is a sector with min attendance count: ${minAnalytics.sectorName} with ${minAnalytics.count} attendances and desired amount of attendances: ${minAnalytics.desired_amount_attendances} at this day: ${dayjs(minAnalytics.day).format('DD/MM/YYYY')}
-          - Here is a sector with max attendance count: ${maxAnalytics.sectorName} with ${maxAnalytics.count} attendances and desired amount of attendances: ${maxAnalytics.desired_amount_attendances} at this day: ${dayjs(maxAnalytics.day).format('DD/MM/YYYY')}
+          Make a table for these stat below, just use the data that is given to you, include sector name, desired amount of attendances, actual amount of attendances, percentage of attendances and day for max and min attendances, do not change the data, just use it as it is:
+          - Here is a sector ${minAnalytics.sectorName} with min attendance count: ${minAnalytics.count} attendances and desired amount of attendances: ${minAnalytics.desired_amount_attendances} at this day: ${dayjs(minAnalytics.day).format('DD/MM/YYYY')}
+          - Here is a sector ${maxAnalytics.sectorName} with max attendance count: ${maxAnalytics.count} attendances and desired amount of attendances: ${maxAnalytics.desired_amount_attendances} at this day: ${dayjs(maxAnalytics.day).format('DD/MM/YYYY')}
           - Here is the percentage of attendances for each sector: ${JSON.stringify(percentageForEachSector)}
             PS. If there is no data, just leave "-".
           Here is the actual data wityh attendances:

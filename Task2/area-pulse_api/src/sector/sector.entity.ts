@@ -30,7 +30,7 @@ export class SectorEntity {
 
   @OneToMany(() => SensorEntity, (sensor) => sensor.sector, {
     cascade: true,
-    eager: true,
+    // eager: true,
   })
   sensors: SensorEntity[];
 
