@@ -1,4 +1,4 @@
-import { LocationEntity } from '../location/location.entity';
+import { SensorEntity } from '../sensor/sensor.entity';
 import {
   Column,
   Entity,
@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { AttendanceEntity } from '../attendance/attendance.entity';
+import { LocationEntity } from '../location/location.entity';
 
 @Entity({ name: 'sectors' })
 export class SectorEntity {
@@ -26,6 +27,12 @@ export class SectorEntity {
     eager: true,
   })
   attendances: AttendanceEntity[];
+
+  @OneToMany(() => SensorEntity, (sensor) => sensor.sector, {
+    cascade: true,
+    eager: true,
+  })
+  sensors: SensorEntity[];
 
   @ManyToOne(() => LocationEntity, (location) => location.sectors, {
     onDelete: 'CASCADE',

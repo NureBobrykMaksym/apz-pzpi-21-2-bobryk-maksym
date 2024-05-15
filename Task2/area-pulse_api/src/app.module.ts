@@ -10,6 +10,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AttendanceModule } from './attendance/attendance.module';
 import { AnalyticsModule } from './analytics/analytics.module';
 import { SectorModule } from './sector/sector.module';
+import { SensorModule } from './sensor/sensor.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { SectorModule } from './sector/sector.module';
     AttendanceModule,
     AnalyticsModule,
     SectorModule,
+    SensorModule,
   ],
   controllers: [AppController],
   providers: [AppService],
