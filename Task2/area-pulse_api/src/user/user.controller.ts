@@ -4,10 +4,12 @@ import {
   Get,
   Post,
   Put,
+  Res,
   UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { User } from './decorator/user.decorator';
 import { CreateUserDto } from './dto/createUser.dto';
 import { LoginUserDto } from './dto/login.dto';
@@ -25,24 +27,29 @@ export class UserController {
   @UsePipes(new ValidationPipe())
   async createUser(
     @Body('user') createUserDto: CreateUserDto,
+    @Res({ passthrough: true }) response: Response,
   ): Promise<UserResponseInterface> {
     const user = await this.userService.createUser(createUserDto);
-    return this.userService.buildUserResponse(user);
+    return this.userService.buildUserResponse(user, response);
   }
 
   @Post('users/login')
   @UsePipes(new ValidationPipe())
   async login(
     @Body('user') loginUserDto: LoginUserDto,
+    @Res({ passthrough: true }) response: Response,
   ): Promise<UserResponseInterface> {
     const user = await this.userService.login(loginUserDto);
-    return this.userService.buildUserResponse(user);
+    return this.userService.buildUserResponse(user, response);
   }
 
   @Get('user')
   @UseGuards(AuthGuard)
-  async currentUser(@User() user: UserEntity): Promise<UserResponseInterface> {
-    return this.userService.buildUserResponse(user);
+  async currentUser(
+    @User() user: UserEntity,
+    @Res({ passthrough: true }) response: Response,
+  ): Promise<UserResponseInterface> {
+    return this.userService.buildUserResponse(user, response);
   }
 
   @Put('user')
@@ -50,12 +57,13 @@ export class UserController {
   async updateCurrentUser(
     @User('id') currentUserId: number,
     @Body('user') updateUserDto: UpdateUserDto,
+    @Res({ passthrough: true }) response: Response,
   ): Promise<UserResponseInterface> {
     const user = await this.userService.updateUser(
       currentUserId,
       updateUserDto,
     );
 
-    return this.userService.buildUserResponse(user);
+    return this.userService.buildUserResponse(user, response);
   }
 }

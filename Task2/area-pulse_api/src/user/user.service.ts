@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { compare } from 'bcrypt';
+import { Response } from 'express';
 import { sign } from 'jsonwebtoken';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/createUser.dto';
@@ -64,7 +65,14 @@ export class UserService {
       process.env.JWT_SECRET,
     );
   }
-  buildUserResponse(user: UserEntity): UserResponseInterface {
+  buildUserResponse(
+    user: UserEntity,
+    response: Response,
+  ): UserResponseInterface {
+    response.cookie('token', this.generateJwt(user), {
+      httpOnly: true,
+      secure: true,
+    });
     return {
       user: {
         ...user,
