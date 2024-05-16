@@ -21,9 +21,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{url}}/users",
+					"raw": "{{url}}{{prefix}}/users",
 					"host": [
-						"{{url}}"
+						"{{url}}{{prefix}}"
 					],
 					"path": [
 						"users"
@@ -47,12 +47,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/users/login",
-					"protocol": "http",
+					"raw": "{{url}}{{prefix}}/users/login",
 					"host": [
-						"localhost"
+						"{{url}}{{prefix}}"
 					],
-					"port": "3000",
 					"path": [
 						"users",
 						"login"
@@ -77,12 +75,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/user",
-					"protocol": "http",
+					"raw": "{{url}}{{prefix}}/user",
 					"host": [
-						"localhost"
+						"{{url}}{{prefix}}"
 					],
-					"port": "3000",
 					"path": [
 						"user"
 					]
@@ -115,12 +111,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/user",
-					"protocol": "http",
+					"raw": "{{url}}{{prefix}}/user",
 					"host": [
-						"localhost"
+						"{{url}}{{prefix}}"
 					],
-					"port": "3000",
 					"path": [
 						"user"
 					]
@@ -153,12 +147,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/locations",
-					"protocol": "http",
+					"raw": "{{url}}{{prefix}}/locations",
 					"host": [
-						"localhost"
+						"{{url}}{{prefix}}"
 					],
-					"port": "3000",
 					"path": [
 						"locations"
 					]
@@ -182,12 +174,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/locations",
-					"protocol": "http",
+					"raw": "{{url}}{{prefix}}/locations",
 					"host": [
-						"localhost"
+						"{{url}}{{prefix}}"
 					],
-					"port": "3000",
 					"path": [
 						"locations"
 					]
@@ -211,12 +201,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/locations/9",
-					"protocol": "http",
+					"raw": "{{url}}{{prefix}}/locations/9",
 					"host": [
-						"localhost"
+						"{{url}}{{prefix}}"
 					],
-					"port": "3000",
 					"path": [
 						"locations",
 						"9"
@@ -241,16 +229,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/locations/12/min",
-					"protocol": "http",
+					"raw": "{{url}}{{prefix}}/locations/12/attendances",
 					"host": [
-						"localhost"
+						"{{url}}{{prefix}}"
 					],
-					"port": "3000",
 					"path": [
 						"locations",
 						"12",
-						"min"
+						"attendances"
 					]
 				}
 			},
@@ -281,12 +267,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/locations/12",
-					"protocol": "http",
+					"raw": "{{url}}{{prefix}}/locations/12",
 					"host": [
-						"localhost"
+						"{{url}}{{prefix}}"
 					],
-					"port": "3000",
 					"path": [
 						"locations",
 						"12"
@@ -311,12 +295,10 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/locations/10",
-					"protocol": "http",
+					"raw": "{{url}}{{prefix}}/locations/10",
 					"host": [
-						"localhost"
+						"{{url}}{{prefix}}"
 					],
-					"port": "3000",
 					"path": [
 						"locations",
 						"10"
@@ -350,12 +332,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/attendances",
-					"protocol": "http",
+					"raw": "{{url}}{{prefix}}/attendances",
 					"host": [
-						"localhost"
+						"{{url}}{{prefix}}"
 					],
-					"port": "3000",
 					"path": [
 						"attendances"
 					]
@@ -379,12 +359,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/attendances",
-					"protocol": "http",
+					"raw": "{{url}}{{prefix}}/attendances",
 					"host": [
-						"localhost"
+						"{{url}}{{prefix}}"
 					],
-					"port": "3000",
 					"path": [
 						"attendances"
 					]
@@ -417,12 +395,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/analytics",
-					"protocol": "http",
+					"raw": "{{url}}{{prefix}}/analytics",
 					"host": [
-						"localhost"
+						"{{url}}{{prefix}}"
 					],
-					"port": "3000",
 					"path": [
 						"analytics"
 					]
@@ -455,12 +431,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/sectors",
-					"protocol": "http",
+					"raw": "{{url}}{{prefix}}/sectors",
 					"host": [
-						"localhost"
+						"{{url}}{{prefix}}"
 					],
-					"port": "3000",
 					"path": [
 						"sectors"
 					]
@@ -484,12 +458,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/sectors?locationId=12",
-					"protocol": "http",
+					"raw": "{{url}}{{prefix}}/sectors?locationId=12",
 					"host": [
-						"localhost"
+						"{{url}}{{prefix}}"
 					],
-					"port": "3000",
 					"path": [
 						"sectors"
 					],
@@ -519,12 +491,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/sectors/9",
-					"protocol": "http",
+					"raw": "{{url}}{{prefix}}/sectors/9",
 					"host": [
-						"localhost"
+						"{{url}}{{prefix}}"
 					],
-					"port": "3000",
 					"path": [
 						"sectors",
 						"9"
@@ -558,12 +528,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/sectors/6",
-					"protocol": "http",
+					"raw": "{{url}}{{prefix}}/sectors/6",
 					"host": [
-						"localhost"
+						"{{url}}{{prefix}}"
 					],
-					"port": "3000",
 					"path": [
 						"sectors",
 						"6"
@@ -588,12 +556,10 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/sectors/8",
-					"protocol": "http",
+					"raw": "{{url}}{{prefix}}/sectors/8",
 					"host": [
-						"localhost"
+						"{{url}}{{prefix}}"
 					],
-					"port": "3000",
 					"path": [
 						"sectors",
 						"8"
@@ -618,9 +584,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/sensors/1",
+					"raw": "{{url}}{{prefix}}/sensors/1",
 					"host": [
-						"{{url}}"
+						"{{url}}{{prefix}}"
 					],
 					"path": [
 						"sensors",
@@ -646,9 +612,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/sensors/?sectorId=9",
+					"raw": "{{url}}{{prefix}}/sensors/?sectorId=9",
 					"host": [
-						"{{url}}"
+						"{{url}}{{prefix}}"
 					],
 					"path": [
 						"sensors",
@@ -689,9 +655,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{url}}/sensors",
+					"raw": "{{url}}{{prefix}}/sensors",
 					"host": [
-						"{{url}}"
+						"{{url}}{{prefix}}"
 					],
 					"path": [
 						"sensors"
@@ -725,9 +691,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{url}}/sensors/1",
+					"raw": "{{url}}{{prefix}}/sensors/1",
 					"host": [
-						"{{url}}"
+						"{{url}}{{prefix}}"
 					],
 					"path": [
 						"sensors",
@@ -753,9 +719,9 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/sensors/1",
+					"raw": "{{url}}{{prefix}}/sensors/1",
 					"host": [
-						"{{url}}"
+						"{{url}}{{prefix}}"
 					],
 					"path": [
 						"sensors",
@@ -791,7 +757,12 @@
 	"variable": [
 		{
 			"key": "url",
-			"value": "http://localhost:3000"
+			"value": "http://localhost:3000/"
+		},
+		{
+			"key": "prefix",
+			"value": "/api",
+			"type": "string"
 		}
 	]
 }
