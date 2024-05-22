@@ -6,10 +6,9 @@ export function RootLayout() {
   return (
     <>
       <Header />
-        <Container maxW="1500px" padding={'24px'} marginBlock="auto" flexGrow={1}>
-          <Outlet />
-        </Container>
-        
+      <Container maxW="1500px" padding={'24px'} marginBlock="auto" flexGrow={1}>
+        <Outlet />
+      </Container>
     </>
   );
 }

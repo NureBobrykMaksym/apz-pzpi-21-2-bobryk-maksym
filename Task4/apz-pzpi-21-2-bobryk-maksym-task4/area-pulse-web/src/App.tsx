@@ -3,6 +3,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import { RootLayout } from './components/layouts/RootLayout';
+import { MainPageWithAuth } from './routes/MainPage';
 
 const queryClient = new QueryClient();
 
@@ -16,7 +17,7 @@ function App() {
             element={<RootLayout />}
             errorElement={<div>404</div>}
           >
-            <Route index element={<div>homepage</div>} />
+            <Route index element={<MainPageWithAuth />} />
             {/* <Route path="sign-up" element={<SignUp />} /> */}
             {/* <Route path="login" element={<Login />} /> */}
             <Route path="*" element={<div>404</div>} />
