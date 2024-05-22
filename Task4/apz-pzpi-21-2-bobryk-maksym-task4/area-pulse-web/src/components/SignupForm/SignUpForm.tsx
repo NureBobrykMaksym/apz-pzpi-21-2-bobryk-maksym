@@ -1,6 +1,7 @@
-import { Button, Input } from '@chakra-ui/react';
+import { Button, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { usersApi } from '../../api/users';
 import { ICreateUser } from '../../types/userTypes';
 import styles from './SignUpForm.module.css';
@@ -9,12 +10,26 @@ export const SignUpForm = () => {
   const [signUpData, setSignUpData] = useState<ICreateUser>({
     user: { email: '', password: '', username: '' },
   });
+  const [show, setShow] = useState(false);
 
   const mutation = useMutation({
     mutationFn: (newUserData: ICreateUser) => {
       return usersApi.signUp(newUserData);
     },
   });
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      navigate('/login');
+      setSignUpData({
+        user: { email: '', password: '', username: '' },
+      });
+    }
+  }, [mutation.isSuccess, navigate]);
+
+  const handleClick = () => setShow(!show);
 
   const onHandleChange = (
     field: string,
@@ -52,11 +67,19 @@ export const SignUpForm = () => {
         value={signUpData.user.email}
         onChange={(e) => onHandleChange('email', e)}
       />
-      <Input
-        placeholder="Password"
-        value={signUpData.user.password}
-        onChange={(e) => onHandleChange('password', e)}
-      />
+      <InputGroup>
+        <Input
+          placeholder="Password"
+          value={signUpData.user.password}
+          onChange={(e) => onHandleChange('password', e)}
+          type={show ? 'text' : 'password'}
+        />
+        <InputRightElement width="4.5rem">
+          <Button h="1.75rem" size="sm" onClick={handleClick}>
+            {show ? 'Hide' : 'Show'}
+          </Button>
+        </InputRightElement>
+      </InputGroup>
       <Button onClick={onSubmit} colorScheme="purple" w={200}>
         Sign Up
       </Button>
