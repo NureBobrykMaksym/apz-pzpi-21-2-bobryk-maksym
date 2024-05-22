@@ -10,7 +10,7 @@ export interface IUser {
 }
 
 export interface ICreateUser {
-  user: { email: string; password: string; firstName: string };
+  user: { email: string; password: string; username: string };
 }
 
 export interface ILoginUser {
