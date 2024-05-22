@@ -4,6 +4,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import { RootLayout } from './components/layouts/RootLayout';
+import { LogInPage } from './routes/LoginPage';
 import { MainPageWithAuth } from './routes/MainPage';
 import { SignUpPage } from './routes/SignUpPage';
 
@@ -22,7 +23,7 @@ function App() {
             >
               <Route index element={<MainPageWithAuth />} />
               <Route path="sign-up" element={<SignUpPage />} />
-              {/* <Route path="login" element={<Login />} /> */}
+              <Route path="login" element={<LogInPage />} />
               <Route path="*" element={<div>404</div>} />
             </Route>
           </Routes>
