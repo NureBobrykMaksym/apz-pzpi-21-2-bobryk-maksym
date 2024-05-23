@@ -1,0 +1,41 @@
+import { apiInstance } from '../libs/axios';
+import { ICreateSector, ISector, IUpdateSector } from '../types/sectorTypes';
+import { DeleteResult } from '../types/sharedTypes';
+
+export const sectorsApi = {
+  getAllSectors: async (
+    token: string,
+    locationId: number
+  ): Promise<ISector> => {
+    return await apiInstance.get(`/sectors?locationId=${locationId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  },
+  getSectorById: async (id: number, token: string): Promise<ISector> => {
+    return await apiInstance.get(`/sectors/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  },
+  createSector: async (
+    data: ICreateSector,
+    token: string
+  ): Promise<ISector> => {
+    return await apiInstance.post('/sectors', data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  },
+  updateSector: async (
+    id: number,
+    data: IUpdateSector,
+    token: string
+  ): Promise<ISector> => {
+    return await apiInstance.patch(`/sectors/${id}`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  },
+  deleteSector: async (id: number, token: string): Promise<DeleteResult> => {
+    return await apiInstance.delete(`/sectors/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  },
+};
