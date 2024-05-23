@@ -7,6 +7,7 @@ import { RootLayout } from './components/layouts/RootLayout';
 import { LogInPage } from './routes/LoginPage';
 import { MainPageWithAuth } from './routes/MainPage';
 import { SignUpPage } from './routes/SignUpPage';
+import { LocationPage } from './routes/LocationPage';
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ function App() {
               <Route index element={<MainPageWithAuth />} />
               <Route path="sign-up" element={<SignUpPage />} />
               <Route path="login" element={<LogInPage />} />
+              <Route path="locations" element={<LocationPage />} />
               <Route path="*" element={<div>404</div>} />
             </Route>
           </Routes>

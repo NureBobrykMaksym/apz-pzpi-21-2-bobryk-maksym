@@ -12,7 +12,7 @@ export interface ICreateLocation {
   location: {
     name: string;
     description: string;
-    area: number;
+    area: number | null;
   };
 }
 

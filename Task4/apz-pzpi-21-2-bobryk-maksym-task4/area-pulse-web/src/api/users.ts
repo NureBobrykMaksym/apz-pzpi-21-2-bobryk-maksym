@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import { apiInstance } from '../libs/axios';
 import { ICreateUser, ILoginUser, IUpdateUser } from '../types/userTypes';
 
@@ -17,5 +18,8 @@ export const usersApi = {
     return await apiInstance.put('/user', data, {
       headers: { Authorization: `Bearer ${token}` },
     });
-  }
+  },
+  logout: () => {
+    return Cookies.remove('token');
+  },
 };
