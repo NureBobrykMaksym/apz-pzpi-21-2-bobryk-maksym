@@ -1,19 +1,31 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { ArrowRightIcon, DeleteIcon } from '@chakra-ui/icons';
+import {
+  Button,
+  Table,
+  TableCaption,
+  TableContainer,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from '@chakra-ui/react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 import { locationsApi } from '../../api/locations';
+import { ILocation } from '../../types/locationTypes';
 
 export const LocationTable = () => {
-  const tokenFromCookies: string | undefined = Cookies.get('token');
+  const tokenFromCookies: string = Cookies.get('token') || '';
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  const { isPending, data, isError } = useQuery({
+  const { data } = useQuery({
     queryKey: ['locations', tokenFromCookies],
-    queryFn: ({ queryKey }) => {
+    queryFn: async ({ queryKey }) => {
       const [, token] = queryKey;
-      if (typeof token === 'string') {
-        return locationsApi.getAllLocations(token);
-      } else {
-        return Promise.reject(new Error('Token is missing'));
-      }
+      return locationsApi.getAllLocations(token);
     },
     enabled: !!tokenFromCookies,
   });
@@ -22,7 +34,53 @@ export const LocationTable = () => {
     mutationFn: (locationId: number) => {
       return locationsApi.deleteLocation(locationId, tokenFromCookies);
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['locations'] });
+    },
   });
 
-  return <div>Locations Table</div>;
+  const onNavigateToLocation = (locationId: number) => {
+    navigate(`/locations/${locationId}`);
+  }
+
+  return (
+    <div>
+      <p>Locations Table</p>
+      <TableContainer>
+        <Table variant="simple">
+          <TableCaption>Locations Table</TableCaption>
+          <Thead>
+            <Tr>
+              <Th>Id</Th>
+              <Th>Name</Th>
+              <Th>Description</Th>
+              <Th isNumeric>Area</Th>
+              <Th textAlign={'right'}>Delete Location</Th>
+              <Th textAlign={'right'}>See details</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {data?.map((location: ILocation) => (
+              <Tr key={location.id}>
+                <Td>{location.id}</Td>
+                <Td>{location.name}</Td>
+                <Td>{location.description}</Td>
+                <Td isNumeric>{location.area}</Td>
+                <Td textAlign={'right'}>
+                  <Button onClick={() => mutation.mutate(location.id)}>
+                    <DeleteIcon />
+                  </Button>
+                </Td>
+                <Td textAlign={'right'}>
+                  <Button onClick={() => onNavigateToLocation(location.id)}>
+                    <ArrowRightIcon />
+                  </Button>
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </TableContainer>
+    </div>
+  );
 };

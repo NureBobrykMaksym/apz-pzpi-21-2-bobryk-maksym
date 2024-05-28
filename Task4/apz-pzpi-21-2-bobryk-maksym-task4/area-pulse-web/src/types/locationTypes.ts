@@ -1,3 +1,4 @@
+import { IAttendance } from './attendanceTypes';
 import { IUser } from './userTypes';
 
 export interface ILocation {
@@ -6,6 +7,7 @@ export interface ILocation {
   description: string;
   area: number;
   user?: IUser;
+  attendances?: IAttendance[];
 }
 
 export interface ICreateLocation {
