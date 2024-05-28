@@ -6,10 +6,12 @@ export const sectorsApi = {
   getAllSectors: async (
     token: string,
     locationId: number
-  ): Promise<ISector> => {
-    return await apiInstance.get(`/sectors?locationId=${locationId}`, {
+  ): Promise<ISector[] | []> => {
+    const response = await apiInstance.get(`/sectors?locationId=${locationId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
+
+    return response.data;
   },
   getSectorById: async (id: number, token: string): Promise<ISector> => {
     return await apiInstance.get(`/sectors/${id}`, {

@@ -41,7 +41,7 @@ export const LocationTable = () => {
 
   const onNavigateToLocation = (locationId: number) => {
     navigate(`/locations/${locationId}`);
-  }
+  };
 
   return (
     <div>
