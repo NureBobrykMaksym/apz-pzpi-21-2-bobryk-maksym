@@ -57,7 +57,7 @@ export class SectorController {
     @Param('id') id: string,
     @Body('sector') updateSectorDto: UpdateSectorDto,
   ): Promise<SectorEntity> {
-    return this.sectorService.updateSector(+id, currentUser, updateSectorDto);
+    return this.sectorService.updateSector(+id, updateSectorDto);
   }
 
   @Delete(':id')

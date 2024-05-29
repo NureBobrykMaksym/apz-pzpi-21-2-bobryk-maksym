@@ -83,28 +83,17 @@ export class SectorService {
 
   async updateSector(
     id: number,
-    user: UserEntity,
     updateSectorDto: UpdateSectorDto,
   ): Promise<SectorEntity> {
     try {
-      const location = await this.locationService.findLocationById(
-        updateSectorDto.locationId,
-        user,
-      );
-
-      if (!location) {
-        throw new Error('Location not found');
-      }
-
       const sector = await this.sectorRepository.findOne({
-        where: { id, location },
+        where: { id },
       });
       if (!sector) {
         throw new Error('Sector not found');
       }
 
       Object.assign(sector, updateSectorDto);
-      sector.location = location;
 
       return await this.sectorRepository.save(sector);
     } catch (error) {
