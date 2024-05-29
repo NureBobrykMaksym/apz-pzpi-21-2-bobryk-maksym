@@ -55,6 +55,15 @@ export class LocationController {
     return this.locationService.findLocationByIdWithAttendances(+id, user);
   }
 
+  @Get(':id/attendances-all')
+  @UseGuards(AuthGuard)
+  async findOneWithAllAttendances(
+    @Param('id') id: string,
+    @User() user: UserEntity,
+  ): Promise<LocationEntity> {
+    return this.locationService.findLocationByIdWithAllAttendances(+id, user);
+  }
+
   @Patch(':id')
   @UseGuards(AuthGuard)
   update(
