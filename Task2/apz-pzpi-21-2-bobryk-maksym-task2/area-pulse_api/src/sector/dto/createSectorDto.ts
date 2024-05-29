@@ -8,4 +8,8 @@ export class CreateSectorDto {
   @IsNotEmpty()
   @IsNumber()
   readonly locationId: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  readonly attendanceCoefficient: number;
 }
