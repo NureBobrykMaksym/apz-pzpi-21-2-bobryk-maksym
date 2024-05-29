@@ -76,7 +76,7 @@ export const SectorsTable: FC<SectorsTableProps> = ({ location }) => {
                   </Button>
                 </Td>
                 <Td textAlign={'right'}>
-                  <Button onClick={() => onNavigateToSector(location.id)}>
+                  <Button onClick={() => onNavigateToSector(sector.id)}>
                     <ArrowRightIcon />
                   </Button>
                 </Td>

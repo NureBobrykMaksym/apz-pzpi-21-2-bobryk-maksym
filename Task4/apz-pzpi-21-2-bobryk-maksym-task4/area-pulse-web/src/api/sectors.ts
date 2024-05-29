@@ -14,9 +14,10 @@ export const sectorsApi = {
     return response.data;
   },
   getSectorById: async (id: number, token: string): Promise<ISector> => {
-    return await apiInstance.get(`/sectors/${id}`, {
+    const response = await apiInstance.get(`/sectors/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    return response.data;
   },
   createSector: async (
     data: ICreateSector,
@@ -31,9 +32,10 @@ export const sectorsApi = {
     data: IUpdateSector,
     token: string
   ): Promise<ISector> => {
-    return await apiInstance.patch(`/sectors/${id}`, data, {
+    const response = await apiInstance.patch(`/sectors/${id}`, data, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    return response.data;
   },
   deleteSector: async (id: number, token: string): Promise<DeleteResult> => {
     return await apiInstance.delete(`/sectors/${id}`, {

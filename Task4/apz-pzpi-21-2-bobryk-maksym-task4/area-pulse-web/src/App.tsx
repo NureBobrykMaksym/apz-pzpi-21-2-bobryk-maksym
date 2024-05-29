@@ -9,6 +9,7 @@ import { MainPageWithAuth } from './routes/MainPage';
 import { SignUpPage } from './routes/SignUpPage';
 import { LocationPage } from './routes/LocationPage';
 import { LocationDetailsPage } from './routes/LocationDetailsPage';
+import { SectorDetailsPage } from './routes/SectorDetailsPage';
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,9 @@ function App() {
               <Route path="locations">
                 <Route index element={<LocationPage />} />
                 <Route path=":locationId" element={<LocationDetailsPage />} />
+              </Route>
+              <Route path="sectors">
+                <Route path=":sectorId" element={<SectorDetailsPage />} />
               </Route>
               <Route path="*" element={<div>404</div>} />
             </Route>

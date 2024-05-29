@@ -11,12 +11,13 @@ export interface ICreateSector {
   sector: {
     name: string;
     locationId: number;
+    attendanceCoefficient: number;
   };
 }
 
 export interface IUpdateSector {
   sector: {
     name?: string;
-    locationId?: number;
+    attendanceCoefficient?: number;
   };
 }
