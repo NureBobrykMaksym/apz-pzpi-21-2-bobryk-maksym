@@ -15,6 +15,7 @@ import { ChangeEvent, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { sectorsApi } from '../../api/sectors';
 import { IUpdateSector } from '../../types/sectorTypes';
+import { AttendanceTable } from '../Attendances/AttendanceTable';
 
 export const SectorDetails = () => {
   const { sectorId } = useParams();
@@ -95,7 +96,6 @@ export const SectorDetails = () => {
     mutation.mutate({ updatedSectorData, sectorId: +sectorId! });
     setIsEditMode(false);
   };
-  console.log(data);
 
   return (
     <Container
@@ -145,6 +145,11 @@ export const SectorDetails = () => {
       <Button w="fit-content" onClick={onChangeEditMode}>
         Edit sector
       </Button>
+      {data?.attendances?.length ? (
+        <AttendanceTable attendances={data.attendances} />
+      ) : (
+        <p>This section does not have attendances yet</p>
+      )}
     </Container>
   );
 };

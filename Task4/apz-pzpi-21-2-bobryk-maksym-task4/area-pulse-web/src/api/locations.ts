@@ -17,6 +17,16 @@ export const locationsApi = {
       throw new Error("Couldn't fetch locations");
     }
   },
+  getAllLocationWithAllAttendances: async (locationId: number, token: string): Promise<ILocation> => {
+    try {
+      const response = await apiInstance.get(`/locations/${locationId}/attendances-all`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error("Couldn't fetch locations");
+    }
+  },
   getLocationById: async (id: number, token: string): Promise<ILocation> => {
     try {
       const response = await apiInstance.get(`/locations/${id}`, {

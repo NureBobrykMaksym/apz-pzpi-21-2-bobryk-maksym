@@ -26,7 +26,7 @@ const withAuth = (Component: FC) => {
 
     useEffect(() => {
       if (isError) {
-        navigate('/login');
+        navigate('/auth/login');
       }
     }, [tokenFromCookies, navigate, data, isError, isPending]);
 

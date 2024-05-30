@@ -15,6 +15,7 @@ import { ChangeEvent, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { locationsApi } from '../../api/locations';
 import { IUpdateLocation } from '../../types/locationTypes';
+import { AttendanceTableWithSectors } from '../Attendances/AttendaceTableWithSectors';
 import { AddSectorControls } from '../Sectors/AddSectorControls';
 import { SectorsTable } from '../Sectors/SectorsTable';
 
@@ -162,6 +163,7 @@ export const LocationDetails = () => {
           <SectorsTable location={data} />
         </>
       )}
+      {locationId && <AttendanceTableWithSectors locationId={locationId} />}
     </Container>
   );
 };
