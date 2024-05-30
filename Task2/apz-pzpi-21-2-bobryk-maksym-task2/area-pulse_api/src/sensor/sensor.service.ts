@@ -37,10 +37,11 @@ export class SensorService {
   async findAllSensors(sectorId: number): Promise<SensorEntity[]> {
     try {
       const sector = await this.sectorService.findSectorById(sectorId);
-
       if (!sector) {
         throw new HttpException('Sector is not found', HttpStatus.NOT_FOUND);
       }
+
+      delete sector.attendances;
 
       const sensors = await this.sensorRepository.find({
         // where: { sector: { id: sectorId } },
