@@ -69,6 +69,7 @@ export class SectorService {
     try {
       const sector = await this.sectorRepository.findOne({
         where: { id },
+        relations: ['attendances'],
       });
 
       if (!sector) {
