@@ -12,6 +12,7 @@ import { LocationPage } from './routes/LocationPage';
 import { LogInPage } from './routes/LoginPage';
 import { MainPage } from './routes/MainPage';
 import { SectorDetailsPage } from './routes/SectorDetailsPage';
+import { SensorDetailsPage } from './routes/SensorDetailsPage';
 import { SignUpPage } from './routes/SignUpPage';
 
 const queryClient = new QueryClient();
@@ -34,6 +35,10 @@ function App() {
               </Route>
               <Route path="sectors">
                 <Route path=":sectorId" element={<SectorDetailsPage />} />
+              </Route>
+
+              <Route path="sensors">
+                <Route path=":sensorId" element={<SensorDetailsPage />} />
               </Route>
               <Route path="*" element={<div>404</div>} />
             </Route>

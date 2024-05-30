@@ -16,6 +16,8 @@ import { useParams } from 'react-router-dom';
 import { sectorsApi } from '../../api/sectors';
 import { IUpdateSector } from '../../types/sectorTypes';
 import { AttendanceTable } from '../Attendances/AttendanceTable';
+import { AddSensorControls } from '../Sensors/AddSensorControls';
+import { SensorsTable } from '../Sensors/SensorsTable';
 
 export const SectorDetails = () => {
   const { sectorId } = useParams();
@@ -145,6 +147,12 @@ export const SectorDetails = () => {
       <Button w="fit-content" onClick={onChangeEditMode}>
         Edit sector
       </Button>
+      {isSuccess && (
+        <>
+          <AddSensorControls sectorId={data.id} />
+          <SensorsTable sectorId={data?.id} sectorName={data?.name} />
+        </>
+      )}
       {data?.attendances?.length ? (
         <AttendanceTable attendances={data.attendances} />
       ) : (
