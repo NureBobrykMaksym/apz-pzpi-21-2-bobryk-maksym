@@ -1,64 +1,46 @@
 package com.example.area_pulse_mobile
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.area_pulse_mobile.model.Todo.Todo
 import com.example.area_pulse_mobile.model.Todo.TodoApiImpl
 import com.example.area_pulse_mobile.model.User.UserApiImpl
+import com.example.area_pulse_mobile.network.HttpClientProvider.client
 import com.example.area_pulse_mobile.repository.TodoRepositoryImpl
 import com.example.area_pulse_mobile.repository.UserRepositoryImpl
 import com.example.area_pulse_mobile.ui.theme.Area_pulse_mobileTheme
 import com.example.area_pulse_mobile.viewmodel.TodoViewModel
 import com.example.area_pulse_mobile.viewmodel.UserViewModel
-import io.github.cdimascio.dotenv.dotenv
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.json.Json
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val client = HttpClient(CIO) {
-            install(ContentNegotiation) { json(Json { ignoreUnknownKeys = true }) }
-        }
-
-        val todoApi = TodoApiImpl(client)
-        val todoRepository = TodoRepositoryImpl(todoApi)
-        val todoViewModel = TodoViewModel(todoRepository)
-
-        val userApi = UserApiImpl(client)
-        val userRepository = UserRepositoryImpl(userApi)
-        val userViewModel = UserViewModel(userRepository)
+        val prefs = getSharedPreferences("jwt", Context.MODE_PRIVATE)
 
         enableEdgeToEdge()
         setContent {
             Area_pulse_mobileTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column(modifier = Modifier.padding(innerPadding)) { // Apply padding to the Column
-                        UserInfo(viewModel = userViewModel)
-//                        TodoScreen(viewModel = todoViewModel)
+                    Column(modifier = Modifier.padding(innerPadding)) {
+                        App(prefs)
                     }
                 }
             }
@@ -67,14 +49,40 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun TodoScreen(viewModel: TodoViewModel) {
+fun App(prefs: SharedPreferences) {
+    val todoApi = TodoApiImpl(client)
+    val todoRepository = TodoRepositoryImpl(todoApi)
+    val todoViewModel = TodoViewModel(todoRepository)
+
+    val userApi = UserApiImpl(client)
+    val userRepository = UserRepositoryImpl(userApi)
+    val userViewModel = UserViewModel(userRepository, prefs)
+
+    val navController = rememberNavController()
+
+    NavHost(navController = navController, startDestination = "login_page") {
+        composable("login_page") {
+            LoginPage(viewModel = userViewModel, onLoginSuccess = { navController.navigate("user_info") })
+        }
+        composable("todo_list") {
+            TodoScreen(viewModel = todoViewModel, onButtonClick = {
+                navController.navigate("user_info")
+            })
+        }
+        composable("user_info") {
+            UserInfo(viewModel = userViewModel)
+        }
+    }
+}
+
+@Composable
+fun TodoScreen(viewModel: TodoViewModel, onButtonClick: () -> Unit) {
     val todos = viewModel.todos.collectAsState()
     println(todos)
     println("hello")
 
     Scaffold { padding ->
         Column {
-            // Custom Top Row (replacement for TopAppBar)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -86,7 +94,9 @@ fun TodoScreen(viewModel: TodoViewModel) {
                     style = MaterialTheme.typography.headlineMedium, // Title-like style
                     modifier = Modifier.weight(1f) // Push title to the left
                 )
-
+                Button(onClick = onButtonClick) {
+                    Text(text = "Click to get user info")
+                }
                 // Add icons or buttons here if needed
                 // Example:
                 // Icon(imageVector = Icons.Filled.Add, contentDescription = "Add Todo")
@@ -115,4 +125,62 @@ fun UserInfo(viewModel: UserViewModel) {
 
 
     user.value?.user?.let { Text(text = it.username) }
+}
+
+@Composable
+fun LoginPage(viewModel: UserViewModel, onLoginSuccess: () -> Unit) {
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
+    // State observation
+    val user by viewModel.user.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
+    val error by viewModel.error.collectAsState(initial = null) // Initial null for errors
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        OutlinedTextField(
+            value = email,
+            onValueChange = { email = it },
+            label = { Text("Email") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        OutlinedTextField(
+            value = password,
+            onValueChange = { password = it },
+            label = { Text("Password") },
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = { viewModel.loginUser(email, password) },
+            enabled = email.isNotBlank() && password.isNotBlank() && !isLoading // Disable if loading
+        ) {
+            Text(if (isLoading) "Logging In..." else "Login")
+        }
+
+        // Error Handling
+        error?.let {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = it, color = Color.Red)
+        }
+
+        // User logged in successfully
+        LaunchedEffect(user) {
+            if (user != null) {
+                onLoginSuccess() // Navigate to the next screen
+            }
+        }
+    }
 }

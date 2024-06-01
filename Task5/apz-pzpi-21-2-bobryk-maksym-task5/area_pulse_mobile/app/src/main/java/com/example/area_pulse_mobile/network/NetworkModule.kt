@@ -24,5 +24,4 @@ object HttpClientProvider {
             logger = Logger.DEFAULT
         }
     }
-//    val todoApi: TodoApi = TodoApiImpl(client)
 }
