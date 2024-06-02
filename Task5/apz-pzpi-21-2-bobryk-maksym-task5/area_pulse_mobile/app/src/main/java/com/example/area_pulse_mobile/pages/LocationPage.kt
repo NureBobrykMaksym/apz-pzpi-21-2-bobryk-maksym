@@ -50,7 +50,7 @@ fun LocationItem(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
-        colors = CardDefaults.cardColors(Color(0xffec4899))
+        colors = CardDefaults.cardColors(Color(0xFF8A2BE2))
     ) {
         Row(
             modifier = Modifier
@@ -59,11 +59,24 @@ fun LocationItem(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            Text(
-                text = location.name ?: "No name provided",
-                style = MaterialTheme.typography.bodySmall,
-                color = Color.White
-            )
+            Column {
+                Text(
+                    text = location.name,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = Color.White
+                )
+                Text(
+                    text = location.description,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.width(300.dp),
+                    color = Color.White
+                )
+                Text(
+                    text = "Area: ${location.area} m^3",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Color.White
+                )
+            }
             Row {
 
                 IconButton(

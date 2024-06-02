@@ -51,8 +51,6 @@ android {
 }
 
 dependencies {
-    val ktor_version: String = "2.3.11"
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -79,6 +77,8 @@ dependencies {
     implementation(libs.ktor.client.logging)
 
     implementation(libs.dotenv.kotlin)
+
+    implementation(libs.twain)
 
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)

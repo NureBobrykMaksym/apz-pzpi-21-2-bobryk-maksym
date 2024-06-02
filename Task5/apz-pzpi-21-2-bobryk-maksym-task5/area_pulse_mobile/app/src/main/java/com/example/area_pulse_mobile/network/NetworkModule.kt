@@ -1,8 +1,6 @@
 package com.example.area_pulse_mobile.network
 
-import com.example.area_pulse_mobile.model.Todo.*
 import io.ktor.client.*
-import io.ktor.client.engine.android.Android
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.serialization.kotlinx.json.*
