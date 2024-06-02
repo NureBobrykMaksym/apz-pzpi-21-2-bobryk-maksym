@@ -54,7 +54,7 @@ export const AddSensorControls: FC<AddSensorControlsProps> = ({ sectorId }) => {
   return (
     <form
       onSubmit={handleSubmit(onCreateLocation)}
-      style={{ marginBottom: '24px' }}
+      style={{ marginTop: '24px' }}
     >
       <Wrap h="fit-content" flexDirection="column" maxW={600} gap={'8px'}>
         <Input
@@ -69,7 +69,7 @@ export const AddSensorControls: FC<AddSensorControlsProps> = ({ sectorId }) => {
           }
         />
 
-        <Button type="submit">Add a sensor</Button>
+        <Button colorScheme='purple' type="submit">Add a sensor</Button>
 
         {errors.name && (
           <Heading color="red" as="h4" size="sm">

@@ -8,6 +8,7 @@ import {
   NumberInput,
   NumberInputField,
   NumberInputStepper,
+  Wrap,
 } from '@chakra-ui/react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
@@ -106,47 +107,58 @@ export const SectorDetails = () => {
       maxW={'100%'}
       gap="16px"
     >
-      {isSuccess && !isEditMode && (
-        <>
-          <Heading as="p" size="lg">
-            {data.name}
-          </Heading>
-          <p>{data.attendanceCoefficient}</p>
-        </>
-      )}
-      {isSuccess && isEditMode && (
-        <form>
-          <Input
-            placeholder="Sector name..."
-            value={updatedSectorData.sector.name}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              handleInputChange(e, 'name')
-            }
-            marginBottom={'8px'}
-          />
-          <NumberInput
-            defaultValue={updatedSectorData.sector.attendanceCoefficient ?? 0}
-            min={0}
-            max={9999}
-            value={updatedSectorData.sector.attendanceCoefficient ?? 0}
-            onChange={(_, value: number) => {
-              handleInputChange(value, 'attendanceCoefficient');
+      <Wrap display="flex" gap="100px">
+        {isSuccess && !isEditMode && (
+          <div
+            style={{
+              display: 'flex',
+              gap: '16px',
+              flexDirection: 'column',
+              maxWidth: '400px',
             }}
-            width={'100%'}
-            marginBottom={'8px'}
           >
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-          <Button onClick={onUpdateSector}>Update sector</Button>
-        </form>
-      )}
-      <Button w="fit-content" onClick={onChangeEditMode}>
-        Edit sector
-      </Button>
+            <Heading as="p" size="lg">
+              {data.name}
+            </Heading>
+            <p>{`Attendance coefficient: ${data.attendanceCoefficient}`}</p>
+          </div>
+        )}
+        {isSuccess && isEditMode && (
+          <form style={{ maxWidth: '400px' }}>
+            <Input
+              placeholder="Sector name..."
+              value={updatedSectorData.sector.name}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                handleInputChange(e, 'name')
+              }
+              marginBottom={'8px'}
+            />
+            <NumberInput
+              defaultValue={updatedSectorData.sector.attendanceCoefficient ?? 0}
+              min={0}
+              max={9999}
+              value={updatedSectorData.sector.attendanceCoefficient ?? 0}
+              onChange={(_, value: number) => {
+                handleInputChange(value, 'attendanceCoefficient');
+              }}
+              width={'100%'}
+              marginBottom={'8px'}
+            >
+              <NumberInputField />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+            <Button colorScheme="purple" onClick={onUpdateSector}>
+              Update sector
+            </Button>
+          </form>
+        )}
+        <Button colorScheme="green" w="fit-content" onClick={onChangeEditMode}>
+          Edit sector
+        </Button>
+      </Wrap>
       {isSuccess && (
         <>
           <AddSensorControls sectorId={data.id} />

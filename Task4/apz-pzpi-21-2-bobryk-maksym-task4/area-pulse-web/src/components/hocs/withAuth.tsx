@@ -25,13 +25,30 @@ const withAuth = (Component: FC) => {
     });
 
     useEffect(() => {
-      if (isError) {
+      if (isError || !tokenFromCookies) {
         navigate('/auth/login');
       }
     }, [tokenFromCookies, navigate, data, isError, isPending]);
 
     return isPending ? (
-      <Spinner thickness="3px" color="blueviolet" width={100} height={100} />
+      <div
+        style={{
+          margin: 'auto',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '16px',
+        }}
+      >
+        <Spinner
+          margin="auto"
+          thickness="4px"
+          color="blueviolet"
+          width={100}
+          height={100}
+        />
+        <p style={{color: "blueviolet"}}>Loading...</p>
+      </div>
     ) : (
       <Component {...props} />
     );

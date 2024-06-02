@@ -88,16 +88,18 @@ export const SensorDetails = () => {
   return (
     <Container
       display={'flex'}
-      flexDirection={'column'}
       maxW={'100%'}
-      gap="16px"
+      gap="100px"
     >
       {isSuccess && !isEditMode && (
-        <>
-          <Heading as="p" size="lg">
-            {data.name}
+        <div style={{display: "flex", flexDirection: "column"}}>
+          <Heading as="p" size="lg" mb="16px">
+            {`Sensor name: ${data.name}`}
           </Heading>
-        </>
+          <Heading as="p" size="md" fontWeight="400">
+            {`Sensor's sector: ${data.sector.name}`}
+          </Heading>
+        </div>
       )}
       {isSuccess && isEditMode && (
         <form>
@@ -109,10 +111,10 @@ export const SensorDetails = () => {
             }
             marginBottom={'8px'}
           />
-          <Button onClick={onUpdateSensor}>Update sensor</Button>
+          <Button colorScheme='purple' onClick={onUpdateSensor}>Update sensor</Button>
         </form>
       )}
-      <Button w="fit-content" onClick={onChangeEditMode}>
+      <Button colorScheme='green' w="fit-content" onClick={onChangeEditMode}>
         Edit sensor
       </Button>
     </Container>

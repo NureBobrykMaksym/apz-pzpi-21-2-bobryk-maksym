@@ -1,4 +1,5 @@
 import {
+  Heading,
   Table,
   TableCaption,
   TableContainer,
@@ -18,7 +19,9 @@ type AttendanceTableProps = {
 export const AttendanceTable: FC<AttendanceTableProps> = ({ attendances }) => {
   return (
     <div>
-      <p>Attendance Table</p>
+      <Heading as="h3" size="md" mb="12px">
+        All attendances for current sector
+      </Heading>
       <TableContainer border="1px solid #EDF2F7" borderRadius="20px">
         <Table variant="simple">
           <TableCaption mb="10px">Current Serctor Attendances Table</TableCaption>

@@ -2,7 +2,7 @@ import { Button, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { usersApi } from '../../api/users';
 import { ILoginUser } from '../../types/userTypes';
 import styles from './LoginForm.module.css';
@@ -73,6 +73,9 @@ export const LoginForm = () => {
           </Button>
         </InputRightElement>
       </InputGroup>
+      <Link style={{ color: "blueviolet" }} to="/auth/sign-up">
+        Don't have an account? Sign up
+      </Link>
       <Button onClick={onSubmit} colorScheme="purple" w={200}>
         Log in
       </Button>

@@ -1,6 +1,7 @@
 import { ArrowRightIcon, DeleteIcon } from '@chakra-ui/icons';
 import {
   Button,
+  Heading,
   Table,
   TableCaption,
   TableContainer,
@@ -54,7 +55,9 @@ export const SensorsTable: FC<SensorsTableProps> = ({
 
   return (
     <div>
-      <p>{`${sectorName} sensors`}</p>
+      <Heading as="h3" size="md" mb="12px">
+        {`${sectorName} sensors`}
+      </Heading>
       <TableContainer border="1px solid #EDF2F7" borderRadius="20px">
         <Table variant="simple">
           <TableCaption mb="10px">Sensors Table</TableCaption>

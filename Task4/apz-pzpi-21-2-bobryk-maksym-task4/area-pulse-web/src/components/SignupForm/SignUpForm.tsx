@@ -1,7 +1,7 @@
 import { Button, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { usersApi } from '../../api/users';
 import { ICreateUser } from '../../types/userTypes';
 import styles from './SignUpForm.module.css';
@@ -80,6 +80,9 @@ export const SignUpForm = () => {
           </Button>
         </InputRightElement>
       </InputGroup>
+      <Link style={{ color: "blueviolet" }} to="/auth/login">
+        Already an account? Log in
+      </Link>
       <Button onClick={onSubmit} colorScheme="purple" w={200}>
         Sign Up
       </Button>
