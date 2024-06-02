@@ -61,6 +61,7 @@ export class SensorService {
     try {
       const sensor = await this.sensorRepository.findOne({
         where: { id },
+        relations: ['sector'],
       });
 
       if (!sensor) {
