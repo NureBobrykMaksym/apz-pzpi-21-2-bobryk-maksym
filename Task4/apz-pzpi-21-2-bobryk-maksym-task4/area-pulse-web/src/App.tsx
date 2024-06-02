@@ -1,7 +1,7 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
 import {
   RootLayout,
@@ -10,7 +10,6 @@ import {
 import { LocationDetailsPage } from './routes/LocationDetailsPage';
 import { LocationPage } from './routes/LocationPage';
 import { LogInPage } from './routes/LoginPage';
-import { MainPage } from './routes/MainPage';
 import { SectorDetailsPage } from './routes/SectorDetailsPage';
 import { SensorDetailsPage } from './routes/SensorDetailsPage';
 import { SignUpPage } from './routes/SignUpPage';
@@ -28,7 +27,7 @@ function App() {
               element={<RootLayoutWithAuth />}
               errorElement={<div>404</div>}
             >
-              <Route index element={<MainPage />} />
+              <Route index element={<Navigate to="/locations" />} />
               <Route path="locations">
                 <Route index element={<LocationPage />} />
                 <Route path=":locationId" element={<LocationDetailsPage />} />

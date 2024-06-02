@@ -80,9 +80,9 @@ export const AddSectorControls: FC<AddSectorControlsProps> = ({
   return (
     <form
       onSubmit={handleSubmit(onCreateLocation)}
-      style={{ marginBottom: '24px' }}
+      style={{ marginBottom: '24px', display: 'flex', gap: '100px' }}
     >
-      <Wrap h="fit-content" flexDirection="column" maxW={600} gap={'8px'}>
+      <Wrap h="fit-content" flexDirection="column" maxW={400} gap={'8px'}>
         <Input
           placeholder="Sector name..."
           value={newSectorData.sector.name}
@@ -132,14 +132,15 @@ export const AddSectorControls: FC<AddSectorControlsProps> = ({
           </NumberInputStepper>
         </NumberInput>
 
-        <Button type="submit">Add a sector</Button>
-
         {errors.name && (
           <Heading color="red" as="h4" size="sm">
             {errors?.name?.message as string}
           </Heading>
         )}
       </Wrap>
+      <Button colorScheme="purple" type="submit">
+        Add a sector
+      </Button>
     </form>
   );
 };

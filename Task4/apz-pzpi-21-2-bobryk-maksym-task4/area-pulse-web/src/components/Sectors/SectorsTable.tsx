@@ -1,5 +1,7 @@
+import { ArrowRightIcon, DeleteIcon } from '@chakra-ui/icons';
 import {
   Button,
+  Heading,
   Table,
   TableCaption,
   TableContainer,
@@ -12,11 +14,10 @@ import {
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { sectorsApi } from '../../api/sectors';
 import { ILocation } from '../../types/locationTypes';
 import { ISector } from '../../types/sectorTypes';
-import { ArrowRightIcon, DeleteIcon } from '@chakra-ui/icons';
-import { useNavigate } from 'react-router-dom';
 
 type SectorsTableProps = {
   location: ILocation;
@@ -47,14 +48,22 @@ export const SectorsTable: FC<SectorsTableProps> = ({ location }) => {
 
   const onNavigateToSector = (sectorId: number) => {
     navigate(`/sectors/${sectorId}`);
-  }
+  };
 
   return (
     <div>
-      <p>{`${location.name} sectors`}</p>
-      <TableContainer>
+      <Heading
+        as="p"
+        size="md"
+        mb="20px"
+      >{`All ${location.name} sectors`}</Heading>
+      <TableContainer
+        border="1px solid #EDF2F7"
+        borderRadius="20px"
+        marginBottom="40px"
+      >
         <Table variant="simple">
-          <TableCaption>Sectors Table</TableCaption>
+          <TableCaption mb="10px">Sectors Table</TableCaption>
           <Thead>
             <Tr>
               <Th>Id</Th>

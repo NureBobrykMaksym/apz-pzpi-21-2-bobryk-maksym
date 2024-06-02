@@ -24,7 +24,7 @@ export const LoginForm = () => {
   useEffect(() => {
     if (mutation.isSuccess) {
       Cookies.set('token', mutation?.data.data.user.token);
-      navigate('/');
+      navigate('/locations');
       setLoginData({
         user: { email: '', password: '' },
       });

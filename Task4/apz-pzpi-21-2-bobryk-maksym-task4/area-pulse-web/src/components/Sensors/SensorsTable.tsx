@@ -55,9 +55,9 @@ export const SensorsTable: FC<SensorsTableProps> = ({
   return (
     <div>
       <p>{`${sectorName} sensors`}</p>
-      <TableContainer>
+      <TableContainer border="1px solid #EDF2F7" borderRadius="20px">
         <Table variant="simple">
-          <TableCaption>Sensors Table</TableCaption>
+          <TableCaption mb="10px">Sensors Table</TableCaption>
           <Thead>
             <Tr>
               <Th>Id</Th>

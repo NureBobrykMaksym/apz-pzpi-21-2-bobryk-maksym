@@ -74,7 +74,7 @@ export const AddLocationControls = () => {
       onSubmit={handleSubmit(onCreateLocation)}
       style={{ marginBottom: '24px' }}
     >
-      <Wrap h="fit-content" flexDirection="column" maxW={600} gap={'8px'}>
+      <Wrap h="fit-content" flexDirection="column" maxW={400} gap={'12px'}>
         <Input
           placeholder="Location name..."
           value={newLocationData.location.name}
@@ -114,7 +114,14 @@ export const AddLocationControls = () => {
           </NumberInputStepper>
         </NumberInput>
 
-        <Button type="submit">Add a location</Button>
+        <Button
+          type="submit"
+          marginTop="20px"
+          marginBottom="50px"
+          colorScheme='purple'
+        >
+          Add a location
+        </Button>
 
         {errors.name && (
           <Heading color="red" as="h4" size="sm">

@@ -1,4 +1,5 @@
 import {
+  Heading,
   Table,
   TableCaption,
   TableContainer,
@@ -16,11 +17,12 @@ import { makeAttendancesArray } from '../../libs/helpers';
 
 type AttendanceTableWithSectorsProps = {
   locationId: string;
+  locationName: string | undefined;
 };
 
 export const AttendanceTableWithSectors: FC<
   AttendanceTableWithSectorsProps
-> = ({ locationId }) => {
+> = ({ locationId, locationName }) => {
   const tokenFromCookies = Cookies.get('token') || '';
   const { data } = useQuery({
     queryKey: ['attendances', locationId, tokenFromCookies],
@@ -34,10 +36,14 @@ export const AttendanceTableWithSectors: FC<
   const refactoredData = makeAttendancesArray(data);
   return (
     <div>
-      <p>Attendance Table</p>
-      <TableContainer>
+      <Heading as="h3" size="md" mb="20px">
+        {`${locationName} attendances`}
+      </Heading>
+      <TableContainer border="1px solid #EDF2F7" borderRadius="20px">
         <Table variant="simple">
-          <TableCaption>Current Serctor Attendances Table</TableCaption>
+          <TableCaption mb="10px">
+            Current Serctor Attendances Table
+          </TableCaption>
           <Thead>
             <Tr>
               <Th>Id</Th>

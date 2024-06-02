@@ -46,9 +46,9 @@ export const LocationTable = () => {
   return (
     <div>
       <p>Locations Table</p>
-      <TableContainer>
+      <TableContainer border="1px solid #EDF2F7" borderRadius="20px">
         <Table variant="simple">
-          <TableCaption>Locations Table</TableCaption>
+          <TableCaption mb="10px">Locations Table</TableCaption>
           <Thead>
             <Tr>
               <Th>Id</Th>

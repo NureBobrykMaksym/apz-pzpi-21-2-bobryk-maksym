@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Heading } from '@chakra-ui/react';
 
 export const Header = () => {
   return (
@@ -11,8 +11,7 @@ export const Header = () => {
         color="white"
         display="flex"
       >
-        <p>Header</p>
-        <h1>Area Pulse</h1>
+        <Heading as="h1">Area Pulse</Heading>
       </Box>
     </header>
   );

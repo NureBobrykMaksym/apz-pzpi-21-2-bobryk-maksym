@@ -103,67 +103,83 @@ export const LocationDetails = () => {
       maxW={'100%'}
       gap="16px"
     >
-      {isSuccess && !isEditMode && (
-        <>
-          <Heading as="p" size="lg">
-            {data.name}
-          </Heading>
-          <p>{data.description}</p>
-          <p>{data.area}</p>
-        </>
-      )}
-      {isSuccess && isEditMode && (
-        <form>
-          <Input
-            placeholder="Location name..."
-            value={updatedLocationData.location.name}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              handleInputChange(e, 'name')
-            }
-            marginBottom={'8px'}
-          />
-          <Input
-            placeholder="Description..."
-            value={updatedLocationData.location.description}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              handleInputChange(e, 'description')
-            }
-            marginBottom={'8px'}
-          />
-          <NumberInput
-            defaultValue={updatedLocationData.location.area ?? 0}
-            min={0}
-            max={9999}
-            value={updatedLocationData.location.area ?? 0}
-            onChange={(_, value: number) => {
-              handleInputChange(value, 'area');
+      <div style={{ display: 'flex', gap: '100px', marginBottom: '40px' }}>
+        {isSuccess && !isEditMode && (
+          <div
+            style={{
+              display: 'flex',
+              gap: '16px',
+              flexDirection: 'column',
+              maxWidth: '400px',
             }}
-            width={'100%'}
-            marginBottom={'8px'}
           >
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-          <Button onClick={onUpdateLocation}>Update location</Button>
-        </form>
-      )}
-      <Button w="fit-content" onClick={onChangeEditMode}>
-        Edit location
-      </Button>
+            <Heading as="p" size="lg">
+              {data.name}
+            </Heading>
+            <p>{data.description}</p>
+            <p>{data.area}</p>
+          </div>
+        )}
+        {isSuccess && isEditMode && (
+          <form style={{ maxWidth: '400px' }}>
+            <Input
+              placeholder="Location name..."
+              value={updatedLocationData.location.name}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                handleInputChange(e, 'name')
+              }
+              marginBottom={'8px'}
+            />
+            <Input
+              placeholder="Description..."
+              value={updatedLocationData.location.description}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                handleInputChange(e, 'description')
+              }
+              marginBottom={'8px'}
+            />
+            <NumberInput
+              defaultValue={updatedLocationData.location.area ?? 0}
+              min={0}
+              max={9999}
+              value={updatedLocationData.location.area ?? 0}
+              onChange={(_, value: number) => {
+                handleInputChange(value, 'area');
+              }}
+              width={'100%'}
+              marginBottom={'8px'}
+            >
+              <NumberInputField />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+            <Button colorScheme="purple" onClick={onUpdateLocation}>
+              Update location
+            </Button>
+          </form>
+        )}
+        <Button colorScheme="green" w="fit-content" onClick={onChangeEditMode}>
+          Edit location
+        </Button>
+      </div>
 
       {data && (
         <>
-          <Heading as="p" size="md">
-            Location's sectors
+          <Heading as="h3" size="md">
+            Sectors control for current location
           </Heading>
           <AddSectorControls locations={[data]} />
           <SectorsTable location={data} />
         </>
       )}
-      {locationId && <AttendanceTableWithSectors locationId={locationId} />}
+      {locationId && (
+        <AttendanceTableWithSectors
+          locationName={data?.name}
+          locationId={locationId}
+        />
+      )}
     </Container>
   );
 };
