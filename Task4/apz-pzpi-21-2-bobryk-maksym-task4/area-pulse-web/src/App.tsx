@@ -1,6 +1,5 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
 import {
@@ -49,7 +48,6 @@ function App() {
           </Routes>
         </BrowserRouter>
       </ChakraProvider>
-      <ReactQueryDevtools initialIsOpen={true} />
     </QueryClientProvider>
   );
 }

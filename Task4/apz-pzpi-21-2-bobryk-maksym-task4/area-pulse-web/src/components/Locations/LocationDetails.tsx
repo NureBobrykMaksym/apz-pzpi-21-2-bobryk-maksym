@@ -18,6 +18,7 @@ import { IUpdateLocation } from '../../types/locationTypes';
 import { AttendanceTableWithSectors } from '../Attendances/AttendaceTableWithSectors';
 import { AddSectorControls } from '../Sectors/AddSectorControls';
 import { SectorsTable } from '../Sectors/SectorsTable';
+import { useTranslation } from 'react-i18next';
 
 export const LocationDetails = () => {
   const { locationId } = useParams();
@@ -27,6 +28,7 @@ export const LocationDetails = () => {
     useState<IUpdateLocation>({
       location: { name: '', description: '', area: 0 },
     });
+  const { t } = useTranslation();
 
   const queryClient = useQueryClient();
 
@@ -161,14 +163,14 @@ export const LocationDetails = () => {
           </form>
         )}
         <Button colorScheme="green" w="fit-content" onClick={onChangeEditMode}>
-          Edit location
+          {t('editLocation')}
         </Button>
       </div>
 
       {data && (
         <>
           <Heading as="h3" size="md">
-            Sectors control for current location
+            {t('sectorsControl')}
           </Heading>
           <AddSectorControls locations={[data]} />
           <SectorsTable location={data} />

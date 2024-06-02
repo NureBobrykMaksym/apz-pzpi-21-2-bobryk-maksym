@@ -2,11 +2,13 @@ import { Button, Container, Heading, Input } from '@chakra-ui/react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { ChangeEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { sensorsApi } from '../../api/sensors';
 import { IUpdateSensor } from '../../types/sensorTypes';
 
 export const SensorDetails = () => {
+  const { t } = useTranslation();
   const { sensorId } = useParams();
   const tokenFromCookies: string | undefined = Cookies.get('token') || '';
   const [isEditMode, setIsEditMode] = useState(false);
@@ -86,36 +88,34 @@ export const SensorDetails = () => {
   };
 
   return (
-    <Container
-      display={'flex'}
-      maxW={'100%'}
-      gap="100px"
-    >
+    <Container display={'flex'} maxW={'100%'} gap="100px">
       {isSuccess && !isEditMode && (
-        <div style={{display: "flex", flexDirection: "column"}}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
           <Heading as="p" size="lg" mb="16px">
-            {`Sensor name: ${data.name}`}
+            {`${t('sensorNameHeading')}${data.name}`}
           </Heading>
           <Heading as="p" size="md" fontWeight="400">
-            {`Sensor's sector: ${data.sector.name}`}
+            {`${t('sensorsSector')} ${data.sector.name}`}
           </Heading>
         </div>
       )}
       {isSuccess && isEditMode && (
         <form>
           <Input
-            placeholder="Sensor name..."
+            placeholder={t('sensorName')}
             value={updatedSensorData.sensor.name}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               handleInputChange(e, 'name')
             }
             marginBottom={'8px'}
           />
-          <Button colorScheme='purple' onClick={onUpdateSensor}>Update sensor</Button>
+          <Button colorScheme="purple" onClick={onUpdateSensor}>
+            {t('updateSensor')}
+          </Button>
         </form>
       )}
-      <Button colorScheme='green' w="fit-content" onClick={onChangeEditMode}>
-        Edit sensor
+      <Button colorScheme="green" w="fit-content" onClick={onChangeEditMode}>
+        {t('editSensor')}
       </Button>
     </Container>
   );

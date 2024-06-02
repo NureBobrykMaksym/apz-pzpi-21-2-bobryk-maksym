@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { ChangeEvent, FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { sensorsApi } from '../../api/sensors';
 import { ICreateSensor } from '../../types/sensorTypes';
 
@@ -11,6 +12,7 @@ type AddSensorControlsProps = {
 };
 
 export const AddSensorControls: FC<AddSensorControlsProps> = ({ sectorId }) => {
+  const { t } = useTranslation();
   const tokenFromCookies: string | undefined = Cookies.get('token');
   const [newSensorData, setNewSensorData] = useState<ICreateSensor>({
     sensor: { name: '', sectorId },
@@ -58,7 +60,7 @@ export const AddSensorControls: FC<AddSensorControlsProps> = ({ sectorId }) => {
     >
       <Wrap h="fit-content" flexDirection="column" maxW={600} gap={'8px'}>
         <Input
-          placeholder="Sensor name..."
+          placeholder={t('sensorName')}
           value={newSensorData.sensor.name}
           {...register('name', {
             required: 'This is required',
@@ -69,7 +71,9 @@ export const AddSensorControls: FC<AddSensorControlsProps> = ({ sectorId }) => {
           }
         />
 
-        <Button colorScheme='purple' type="submit">Add a sensor</Button>
+        <Button colorScheme="purple" type="submit">
+          {t('addSensor')}
+        </Button>
 
         {errors.name && (
           <Heading color="red" as="h4" size="sm">

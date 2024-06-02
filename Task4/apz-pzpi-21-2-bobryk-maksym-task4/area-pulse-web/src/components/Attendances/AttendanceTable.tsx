@@ -11,25 +11,28 @@ import {
 } from '@chakra-ui/react';
 import { FC } from 'react';
 import { IAttendance } from '../../types/attendanceTypes';
+import { useTranslation } from 'react-i18next';
 
 type AttendanceTableProps = {
   attendances: IAttendance[];
 };
 
 export const AttendanceTable: FC<AttendanceTableProps> = ({ attendances }) => {
+  const { t } = useTranslation();
+
   return (
     <div>
       <Heading as="h3" size="md" mb="12px">
-        All attendances for current sector
+        {t('currentSectorAttendances')}
       </Heading>
       <TableContainer border="1px solid #EDF2F7" borderRadius="20px">
         <Table variant="simple">
-          <TableCaption mb="10px">Current Serctor Attendances Table</TableCaption>
+          <TableCaption mb="10px">{t('currentSectorAttendances')}</TableCaption>
           <Thead>
             <Tr>
               <Th>Id</Th>
-              <Th>Name</Th>
-              <Th>Captured at</Th>
+              <Th>{t('name')}</Th>
+              <Th>{t('captured')}</Th>
             </Tr>
           </Thead>
           <Tbody>

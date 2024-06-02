@@ -17,6 +17,7 @@ import { useForm } from 'react-hook-form';
 import { sectorsApi } from '../../api/sectors';
 import { ILocation } from '../../types/locationTypes';
 import { ICreateSector } from '../../types/sectorTypes';
+import { useTranslation } from 'react-i18next';
 
 type AddSectorControlsProps = {
   locations: ILocation[];
@@ -25,6 +26,7 @@ type AddSectorControlsProps = {
 export const AddSectorControls: FC<AddSectorControlsProps> = ({
   locations,
 }) => {
+  const { t } = useTranslation();
   const tokenFromCookies: string | undefined = Cookies.get('token');
   const [newSectorData, setNewSectorData] = useState<ICreateSector>({
     sector: { name: '', locationId: 0, attendanceCoefficient: 0 },
@@ -84,7 +86,7 @@ export const AddSectorControls: FC<AddSectorControlsProps> = ({
     >
       <Wrap h="fit-content" flexDirection="column" maxW={400} gap={'8px'}>
         <Input
-          placeholder="Sector name..."
+          placeholder={t('sectorNamePlaceholder')}
           value={newSectorData.sector.name}
           {...register('name', {
             required: 'This is required',
@@ -96,9 +98,8 @@ export const AddSectorControls: FC<AddSectorControlsProps> = ({
         />
 
         <Select
-          placeholder="Choose a location"
+          placeholder={t('chooseLocation')}
           onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-            console.log(e.target.value);
             setNewSectorData({
               sector: {
                 ...newSectorData.sector,
@@ -139,7 +140,7 @@ export const AddSectorControls: FC<AddSectorControlsProps> = ({
         )}
       </Wrap>
       <Button colorScheme="purple" type="submit">
-        Add a sector
+        {t('addSector')}
       </Button>
     </form>
   );

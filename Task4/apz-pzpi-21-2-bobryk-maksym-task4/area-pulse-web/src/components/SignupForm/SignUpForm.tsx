@@ -5,12 +5,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { usersApi } from '../../api/users';
 import { ICreateUser } from '../../types/userTypes';
 import styles from './SignUpForm.module.css';
+import { useTranslation } from 'react-i18next';
 
 export const SignUpForm = () => {
   const [signUpData, setSignUpData] = useState<ICreateUser>({
     user: { email: '', password: '', username: '' },
   });
   const [show, setShow] = useState(false);
+  const { t } = useTranslation();
 
   const mutation = useMutation({
     mutationFn: (newUserData: ICreateUser) => {
@@ -58,33 +60,33 @@ export const SignUpForm = () => {
   return (
     <form className={styles.formWrapper}>
       <Input
-        placeholder="Username"
+        placeholder={t('usernamePlaceholder')}
         value={signUpData.user.username}
         onChange={(e) => onHandleChange('username', e)}
       />
       <Input
-        placeholder="Email"
+        placeholder={t('emailPlaceholder')}
         value={signUpData.user.email}
         onChange={(e) => onHandleChange('email', e)}
-      />
+        />
       <InputGroup>
         <Input
-          placeholder="Password"
+          placeholder={t('passwordPlaceholder')}
           value={signUpData.user.password}
           onChange={(e) => onHandleChange('password', e)}
           type={show ? 'text' : 'password'}
         />
         <InputRightElement width="4.5rem">
           <Button h="1.75rem" size="sm" onClick={handleClick}>
-            {show ? 'Hide' : 'Show'}
+            {show ? t('hide') : t('show')}
           </Button>
         </InputRightElement>
       </InputGroup>
-      <Link style={{ color: "blueviolet" }} to="/auth/login">
-        Already an account? Log in
+      <Link style={{ color: 'blueviolet' }} to="/auth/login">
+        {t('loginSuggestion')}
       </Link>
       <Button onClick={onSubmit} colorScheme="purple" w={200}>
-        Sign Up
+        {t('signUp')}
       </Button>
     </form>
   );

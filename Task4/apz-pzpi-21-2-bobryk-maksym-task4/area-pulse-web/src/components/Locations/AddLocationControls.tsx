@@ -15,6 +15,7 @@ import { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { locationsApi } from '../../api/locations';
 import { ICreateLocation } from '../../types/locationTypes';
+import { useTranslation } from 'react-i18next';
 
 export const AddLocationControls = () => {
   const tokenFromCookies: string | undefined = Cookies.get('token');
@@ -27,6 +28,7 @@ export const AddLocationControls = () => {
     formState: { errors },
   } = useForm();
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
 
   const mutation = useMutation({
     mutationFn: (createLocationData: ICreateLocation) => {
@@ -76,7 +78,7 @@ export const AddLocationControls = () => {
     >
       <Wrap h="fit-content" flexDirection="column" maxW={400} gap={'12px'}>
         <Input
-          placeholder="Location name..."
+          placeholder={t('locationNamePlaceholder')}
           value={newLocationData.location.name}
           {...register('name', {
             required: 'This is required',
@@ -87,7 +89,7 @@ export const AddLocationControls = () => {
           }
         />
         <Input
-          placeholder="Description..."
+          placeholder={t('descriptionPlaceholder')}
           value={newLocationData.location.description}
           {...register('description', {
             required: 'This is required',
@@ -120,7 +122,7 @@ export const AddLocationControls = () => {
           marginBottom="50px"
           colorScheme='purple'
         >
-          Add a location
+          {t('addLocation')}
         </Button>
 
         {errors.name && (

@@ -12,6 +12,7 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { locationsApi } from '../../api/locations';
 import { makeAttendancesArray } from '../../libs/helpers';
 
@@ -23,6 +24,7 @@ type AttendanceTableWithSectorsProps = {
 export const AttendanceTableWithSectors: FC<
   AttendanceTableWithSectorsProps
 > = ({ locationId, locationName }) => {
+  const { t } = useTranslation();
   const tokenFromCookies = Cookies.get('token') || '';
   const { data } = useQuery({
     queryKey: ['attendances', locationId, tokenFromCookies],
@@ -37,19 +39,19 @@ export const AttendanceTableWithSectors: FC<
   return (
     <div>
       <Heading as="h3" size="md" mb="20px">
-        {`${locationName} attendances`}
+        {`${t('locationAttendances')}${locationName}`}
       </Heading>
       <TableContainer border="1px solid #EDF2F7" borderRadius="20px">
         <Table variant="simple">
           <TableCaption mb="10px">
-            Current Serctor Attendances Table
+            {t('currentLocationAttendances')}
           </TableCaption>
           <Thead>
             <Tr>
               <Th>Id</Th>
-              <Th>Name</Th>
-              <Th>Captured at</Th>
-              <Th>Sector</Th>
+              <Th>{t('name')}</Th>
+              <Th>{t('captured')}</Th>
+              <Th>{t('sector')}</Th>
             </Tr>
           </Thead>
           <Tbody>

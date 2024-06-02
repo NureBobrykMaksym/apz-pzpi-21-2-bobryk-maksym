@@ -13,6 +13,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { ChangeEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { sectorsApi } from '../../api/sectors';
 import { IUpdateSector } from '../../types/sectorTypes';
@@ -21,6 +22,7 @@ import { AddSensorControls } from '../Sensors/AddSensorControls';
 import { SensorsTable } from '../Sensors/SensorsTable';
 
 export const SectorDetails = () => {
+  const { t } = useTranslation();
   const { sectorId } = useParams();
   const tokenFromCookies: string | undefined = Cookies.get('token') || '';
   const [isEditMode, setIsEditMode] = useState(false);
@@ -120,13 +122,15 @@ export const SectorDetails = () => {
             <Heading as="p" size="lg">
               {data.name}
             </Heading>
-            <p>{`Attendance coefficient: ${data.attendanceCoefficient}`}</p>
+            <p>{`${t('attendanceCoefficient')}${
+              data.attendanceCoefficient
+            }`}</p>
           </div>
         )}
         {isSuccess && isEditMode && (
           <form style={{ maxWidth: '400px' }}>
             <Input
-              placeholder="Sector name..."
+              placeholder={t('sectorNamePlaceholder')}
               value={updatedSectorData.sector.name}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 handleInputChange(e, 'name')
@@ -151,12 +155,12 @@ export const SectorDetails = () => {
               </NumberInputStepper>
             </NumberInput>
             <Button colorScheme="purple" onClick={onUpdateSector}>
-              Update sector
+              {t('updateSector')}
             </Button>
           </form>
         )}
         <Button colorScheme="green" w="fit-content" onClick={onChangeEditMode}>
-          Edit sector
+          {t('editSector')}
         </Button>
       </Wrap>
       {isSuccess && (
@@ -168,7 +172,7 @@ export const SectorDetails = () => {
       {data?.attendances?.length ? (
         <AttendanceTable attendances={data.attendances} />
       ) : (
-        <p>This section does not have attendances yet</p>
+        <p>{t('sectorNotHaveAttendances')}</p>
       )}
     </Container>
   );

@@ -14,6 +14,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { sensorsApi } from '../../api/sensors';
 import { ISensor } from '../../types/sensorTypes';
@@ -27,6 +28,7 @@ export const SensorsTable: FC<SensorsTableProps> = ({
   sectorName,
   sectorId,
 }) => {
+  const { t } = useTranslation();
   const tokenFromCookies: string | undefined = Cookies.get('token') || '';
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -56,17 +58,17 @@ export const SensorsTable: FC<SensorsTableProps> = ({
   return (
     <div>
       <Heading as="h3" size="md" mb="12px">
-        {`${sectorName} sensors`}
+        {`${t('sensorsForSector')} ${sectorName}`}
       </Heading>
       <TableContainer border="1px solid #EDF2F7" borderRadius="20px">
         <Table variant="simple">
-          <TableCaption mb="10px">Sensors Table</TableCaption>
+          <TableCaption mb="10px">{t('sensorsTable')}</TableCaption>
           <Thead>
             <Tr>
               <Th>Id</Th>
-              <Th>Name</Th>
-              <Th textAlign={'right'}>Delete</Th>
-              <Th textAlign={'right'}>See details</Th>
+              <Th>{t('name')}</Th>
+              <Th textAlign={'right'}>{t('delete')}</Th>
+              <Th textAlign={'right'}>{t('seeDetails')}</Th>
             </Tr>
           </Thead>
           <Tbody>

@@ -4,12 +4,14 @@ import Cookies from 'js-cookie';
 import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usersApi } from '../../api/users';
+import { useTranslation } from 'react-i18next';
 
 const withAuth = (Component: FC) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (props: any) => {
     const tokenFromCookies: string | undefined = Cookies.get('token');
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const { isPending, data, isError } = useQuery({
       queryKey: ['currentUser', tokenFromCookies],
@@ -47,7 +49,7 @@ const withAuth = (Component: FC) => {
           width={100}
           height={100}
         />
-        <p style={{color: "blueviolet"}}>Loading...</p>
+        <p style={{color: "blueviolet"}}>{t('loading')}</p>
       </div>
     ) : (
       <Component {...props} />

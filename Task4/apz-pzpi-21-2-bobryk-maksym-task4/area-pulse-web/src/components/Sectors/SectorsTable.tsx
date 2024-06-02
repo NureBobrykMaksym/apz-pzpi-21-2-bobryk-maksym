@@ -14,6 +14,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { sectorsApi } from '../../api/sectors';
 import { ILocation } from '../../types/locationTypes';
@@ -24,6 +25,7 @@ type SectorsTableProps = {
 };
 
 export const SectorsTable: FC<SectorsTableProps> = ({ location }) => {
+  const { t } = useTranslation();
   const tokenFromCookies: string | undefined = Cookies.get('token') || '';
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -56,21 +58,21 @@ export const SectorsTable: FC<SectorsTableProps> = ({ location }) => {
         as="p"
         size="md"
         mb="20px"
-      >{`All ${location.name} sectors`}</Heading>
+      >{`${t('allLocationSectors')} ${location.name}`}</Heading>
       <TableContainer
         border="1px solid #EDF2F7"
         borderRadius="20px"
         marginBottom="40px"
       >
         <Table variant="simple">
-          <TableCaption mb="10px">Sectors Table</TableCaption>
+          <TableCaption mb="10px">{t('sectorsTable')}</TableCaption>
           <Thead>
             <Tr>
               <Th>Id</Th>
-              <Th>Name</Th>
-              <Th>Attendance coefficient</Th>
-              <Th textAlign={'right'}>Delete</Th>
-              <Th textAlign={'right'}>See details</Th>
+              <Th>{t('name')}</Th>
+              <Th>{t('attendanceCoefficientRow')}</Th>
+              <Th textAlign={'right'}>{t('delete')}</Th>
+              <Th textAlign={'right'}>{t('seeDetails')}</Th>
             </Tr>
           </Thead>
           <Tbody>

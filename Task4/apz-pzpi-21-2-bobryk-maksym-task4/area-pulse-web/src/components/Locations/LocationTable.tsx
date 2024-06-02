@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { locationsApi } from '../../api/locations';
 import { ILocation } from '../../types/locationTypes';
@@ -20,6 +21,7 @@ export const LocationTable = () => {
   const tokenFromCookies: string = Cookies.get('token') || '';
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
 
   const { data } = useQuery({
     queryKey: ['locations', tokenFromCookies],
@@ -45,18 +47,18 @@ export const LocationTable = () => {
 
   return (
     <div>
-      <p>Locations Table</p>
+      <p>{t('locationTable')}</p>
       <TableContainer border="1px solid #EDF2F7" borderRadius="20px">
         <Table variant="simple">
-          <TableCaption mb="10px">Locations Table</TableCaption>
+          <TableCaption mb="10px">{t('locationTable')}</TableCaption>
           <Thead>
             <Tr>
               <Th>Id</Th>
-              <Th>Name</Th>
-              <Th>Description</Th>
-              <Th isNumeric>Area</Th>
-              <Th textAlign={'right'}>Delete Location</Th>
-              <Th textAlign={'right'}>See details</Th>
+              <Th>{t('name')}</Th>
+              <Th>{t('description')}</Th>
+              <Th isNumeric>{t('area')}</Th>
+              <Th textAlign={'right'}>{t('deleteLocation')}</Th>
+              <Th textAlign={'right'}>{t('seeDetails')}</Th>
             </Tr>
           </Thead>
           <Tbody>

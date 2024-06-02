@@ -6,12 +6,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { usersApi } from '../../api/users';
 import { ILoginUser } from '../../types/userTypes';
 import styles from './LoginForm.module.css';
+import { useTranslation } from 'react-i18next';
 
 export const LoginForm = () => {
   const [loginData, setLoginData] = useState<ILoginUser>({
     user: { email: '', password: '' },
   });
   const [show, setShow] = useState(false);
+  const { t } = useTranslation();
 
   const mutation = useMutation({
     mutationFn: (loginData: ILoginUser) => {
@@ -56,13 +58,13 @@ export const LoginForm = () => {
   return (
     <form className={styles.formWrapper}>
       <Input
-        placeholder="Email"
+        placeholder={t('emailPlaceholder')}
         value={loginData.user.email}
         onChange={(e) => onHandleChange('email', e)}
-      />
+        />
       <InputGroup>
         <Input
-          placeholder="Password"
+          placeholder={t('passwordPlaceholder')}
           value={loginData.user.password}
           onChange={(e) => onHandleChange('password', e)}
           type={show ? 'text' : 'password'}
@@ -74,10 +76,10 @@ export const LoginForm = () => {
         </InputRightElement>
       </InputGroup>
       <Link style={{ color: "blueviolet" }} to="/auth/sign-up">
-        Don't have an account? Sign up
+        {t('signUpSuggestion')}
       </Link>
       <Button onClick={onSubmit} colorScheme="purple" w={200}>
-        Log in
+        {t('login')}
       </Button>
     </form>
   );
