@@ -1,12 +1,9 @@
 package com.example.area_pulse_mobile.viewmodel
 
 import android.content.SharedPreferences
-import android.provider.ContactsContract.CommonDataKinds.Email
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.area_pulse_mobile.model.Todo.Todo
 import com.example.area_pulse_mobile.model.User.UserResponse
-import com.example.area_pulse_mobile.repository.TodoRepository
 import com.example.area_pulse_mobile.repository.UserRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
