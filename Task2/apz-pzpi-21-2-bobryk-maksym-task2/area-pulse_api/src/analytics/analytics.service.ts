@@ -16,7 +16,7 @@ import { DailyAnalytics } from './types/dailyAnalytics.inteface';
 dotenv.config();
 
 const anthropic = new Anthropic({
-  apiKey: process.env.CLAUDEAI_KEY, // This is the default and can be omitted
+  apiKey: process.env.CLAUDEAI_KEY,
 });
 
 @Injectable()
@@ -41,7 +41,6 @@ export class AnalyticsService {
       const startOfWeek = today.startOf('week').toDate();
       const endOfWeek = today.endOf('week').toDate();
 
-      // Step 1: Find all sectors associated with the given location
       const location = await this.locationRepository.findOne({
         where: { id: locationId, user },
         relations: ['sectors'],
@@ -51,12 +50,10 @@ export class AnalyticsService {
         throw new HttpException('Location not found', HttpStatus.NOT_FOUND);
       }
 
-      // If no sectors, there are no attendances
       if (location.sectors.length === 0) {
         return null;
       }
 
-      // Step 2: Find attendance records for those sectors
       const sectorIds = location.sectors.map((sector) => sector.id);
 
       const dailyAnalytics: DailyAnalytics[] = await this.attendanceRepository
@@ -173,7 +170,7 @@ export class AnalyticsService {
             - For location, calculate the average, maximum, minimum, and total attendance.
             - Generate markdown output presenting these analytics for location and overall statistics.
             - Give some tips for improving attendance if possible.
-            - Ensure that the markdown output is well-formatted and easy to read
+            - Ensure that the markdown output is well-formatted and easy to read, skip determing that it's markdown. Just give the output.
 
             Example of input JSON Format:
             {
